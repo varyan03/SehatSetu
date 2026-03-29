@@ -75,7 +75,7 @@ export default function PatientFormPage() {
       // 1. Get Prediction
       let predictionResult = null;
       try {
-        const predictResponse = await fetch("/api/predict", {
+        const predictResponse = await fetch("http://localhost:5001/api/predict", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: formData.symptoms }),
@@ -93,7 +93,7 @@ export default function PatientFormPage() {
       }
 
       // 2. Submit Patient Data
-      const response = await fetch("/api/patient", {
+      const response = await fetch("http://localhost:5001/api/patient", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

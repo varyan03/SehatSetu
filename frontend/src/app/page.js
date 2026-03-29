@@ -4,68 +4,241 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      {/* Navigation */}
-      <nav>
-        <div className="container">
-          <div className="nav-brand">Sehat<span>Setu</span></div>
-          <div className="nav-links">
-            <Link href="/login">Log in</Link>
-            <Link href="/register" className="btn btn-primary" style={{ padding: "0.5rem 1.5rem", fontSize: "0.95rem" }}>
-              Start for free
+      {/* Hover Navbar */}
+      <nav style={{ background: "transparent", borderBottom: "none", paddingTop: "1.5rem", position: "absolute", width: "100%", zIndex: 50 }}>
+        <div className="container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1200px" }}>
+          <div className="nav-brand" style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "1.75rem", fontWeight: "400", color: "#3d8a62" }}>
+            {/* Logo Icon Match */}
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+              <path d="M9 12h6"></path>
+              <path d="M12 9v6"></path>
+            </svg>
+            <strong>Sehat</strong>Setu
+          </div>
+          <div className="nav-links" style={{ fontSize: "1rem", fontWeight: "300" }}>
+            <Link href="/" style={{ color: "var(--gray-600)" }}>Home</Link>
+            <Link href="/faq" style={{ color: "var(--gray-600)" }}>FAQ</Link>
+            <Link href="/about" style={{ color: "var(--gray-600)" }}>About us</Link>
+            <Link href="/register" className="btn btn-primary" style={{ backgroundColor: "#00df81", color: "white", fontWeight: "400", padding: "0.6rem 1.8rem", marginLeft: "1.5rem", boxShadow: "none", borderRadius: "9999px" }}>
+              Book Appointment
             </Link>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section style={{ padding: "7rem 1.5rem 5rem", textAlign: "center", position: "relative" }}>
-        <div className="container">
-          <div style={{ 
-            display: "inline-block", 
-            padding: "0.5rem 1rem", 
-            background: "rgba(16, 185, 129, 0.1)", 
-            color: "var(--primary)", 
-            borderRadius: "9999px",
-            fontWeight: "700",
-            marginBottom: "1.5rem",
-            fontSize: "0.9rem"
+      <section style={{ 
+        position: "relative", 
+        overflow: "hidden", 
+        paddingTop: "8rem", 
+        paddingBottom: "4rem",
+        backgroundColor: "#EBF1F1", 
+        minHeight: "90vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center"
+      }}>
+        {/* Massive White Background Text */}
+        <div style={{
+          position: "absolute",
+          top: "40%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          fontSize: "clamp(8rem, 25vw, 30rem)",
+          fontWeight: "600",
+          color: "#F6F7F9", 
+          whiteSpace: "nowrap",
+          zIndex: 0,
+          pointerEvents: "none",
+          userSelect: "none",
+          letterSpacing: "-0.04em",
+          lineHeight: 1
+        }}>
+          HEALTH
+        </div>
+
+        {/* Central 3D Graphic Stacking Naturally */}
+        <div style={{
+          position: "relative",
+          width: "450px",
+          height: "450px",
+          zIndex: 1,
+          opacity: 0.95,
+          pointerEvents: "none",
+          maskImage: "radial-gradient(circle, black 46%, transparent 68%)",
+          WebkitMaskImage: "radial-gradient(circle, black 46%, transparent 68%)",
+          mixBlendMode: "multiply",
+          marginBottom: "-2rem",
+          marginTop: "2rem"
+        }}>
+          <Image 
+            src="/hero-graphic.png" 
+            alt="Medical 3D Concept" 
+            fill 
+            style={{ objectFit: "contain" }}
+            priority
+            unoptimized={true}
+          />
+        </div>
+
+        {/* Foreground Content Filling the Gap */}
+        <div className="container" style={{ position: "relative", zIndex: 2, textAlign: "center" }}>
+          <h1 style={{ 
+            fontSize: "clamp(3rem, 5.5vw, 5rem)", 
+            lineHeight: 1.1, 
+            marginBottom: "1rem", 
+            letterSpacing: "-1.5px"
           }}>
-            Advanced Healthcare Management
-          </div>
-          <h1 style={{ marginBottom: "1.5rem", maxWidth: "800px", margin: "0 auto 1.5rem" }}>
-            Your Health, <span style={{ color: "var(--primary)" }}>Our Priority</span>
+            <span style={{ color: "#214D4B", fontWeight: "700", display: "block" }}>Your Health In Focus,</span>
+            <span style={{ color: "#3F8861", fontWeight: "700" }}>Your </span>
+            <span style={{ color: "#41a471ff", fontWeight: "700" }}>Li</span>
+            <span style={{ color: "#55b684ff", fontWeight: "700" }}>fe </span>
+            <span style={{ color: "#66CF95", fontWeight: "700" }}>In Balance</span>
           </h1>
-          <p style={{ fontSize: "1.25rem", color: "var(--gray-600)", marginBottom: "3rem", maxWidth: "600px", margin: "0 auto 3rem" }}>
-            Connect with qualified doctors, manage medical records securely, and book appointments with precision and ease.
+          <p style={{ 
+            fontSize: "1.25rem", 
+            fontWeight: "400", 
+            color: "#214D4B", 
+            marginBottom: "0" 
+          }}>
+            A new perspective on healthcare
           </p>
-          <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
-            <Link href="/register" className="btn btn-primary">Start your journey</Link>
-          </div>
         </div>
       </section>
 
-      {/* Statistics Section (Cijfers equivalent) */}
-      <section style={{ padding: "4rem 1.5rem", borderTop: "1px solid var(--gray-200)", borderBottom: "1px solid var(--gray-200)", backgroundColor: "white" }}>
-        <div className="container text-center">
-          <h3 style={{ marginBottom: "3rem" }}>Trusted by thousands across the nation</h3>
-          <div className="grid grid-4" style={{ textAlign: "center" }}>
-            <div>
-              <div style={{ fontSize: "3rem", fontWeight: "800", color: "var(--primary)", marginBottom: "0.5rem" }}>17+</div>
-              <p style={{ fontWeight: "600", color: "var(--secondary)" }}>Regions Covered</p>
-            </div>
-            <div>
-              <div style={{ fontSize: "3rem", fontWeight: "800", color: "var(--primary)", marginBottom: "0.5rem" }}>80+</div>
-              <p style={{ fontWeight: "600", color: "var(--secondary)" }}>Medical Practices</p>
-            </div>
-            <div>
-              <div style={{ fontSize: "3rem", fontWeight: "800", color: "var(--primary)", marginBottom: "0.5rem" }}>150</div>
-              <p style={{ fontWeight: "600", color: "var(--secondary)" }}>Expert Specialists</p>
-            </div>
-            <div>
-              <div style={{ fontSize: "3rem", fontWeight: "800", color: "var(--primary)", marginBottom: "0.5rem" }}>10k</div>
-              <p style={{ fontWeight: "600", color: "var(--secondary)" }}>Patients Helped</p>
-            </div>
+      {/* Preventative Medical Care Section */}
+      <section style={{ padding: "0rem 1.5rem 3rem 1.5rem", backgroundColor: "#EBF1F1", textAlign: "center", position: "relative", zIndex: 2 }}>
+        <div className="container" style={{ maxWidth: "800px" }}>
+          {/* <h2 style={{ fontSize: "3rem", margin: "0 0 0.5rem 0", color: "#214D4B", letterSpacing: "3px", fontWeight: "500" }}>
+            Preventative Medical Care
+          </h2>
+          <h3 style={{ fontSize: "1.5rem", fontWeight: "300", color: "#3D8A62", margin: "0 0 2rem 0" }}>
+            that goes further
+          </h3>
+          <p style={{ fontSize: "1.1rem", color: "var(--gray-600)", marginBottom: "3rem", lineHeight: 1.8, fontWeight: "300" }}>
+            The bridge to a life full of vitality. Discover how strong health is more than just the absence of illness – it is the key to more energy, mental clarity, and a deep sense of well-being. Start your journey to a richer life here.
+          </p> */}
+          <Link href="/register" className="btn btn-primary" style={{ padding: "1rem 2.5rem", fontSize: "1.1rem", backgroundColor: "#00df81", borderRadius: "9999px", color: "white", fontWeight: "300" }}>
+            Book Appointment
+          </Link>
+        </div>
+      </section>
+
+      {/* Statistics Section */}
+      <section style={{ 
+        position: "relative",
+        padding: "8rem 1.5rem 8rem", 
+        backgroundColor: "#EBF1F1", /* Soft minty grey matching image background */
+        overflow: "hidden"
+      }}>
+        {/* Faded Background Text */}
+        <div style={{
+          position: "absolute",
+          top: "15%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          fontSize: "clamp(10rem, 22vw, 25rem)",
+          fontWeight: "800",
+          color: "#F6F7F9", /* Faint watermark */
+          whiteSpace: "nowrap",
+          zIndex: 0,
+          pointerEvents: "none",
+          userSelect: "none",
+          letterSpacing: "0.05em",
+        }}>
+          Statistics
+        </div>
+        
+        {/* Content Container */}
+        <div className="container" style={{ position: "relative", zIndex: 1, maxWidth: "1200px" }}>
+          
+          {/* Header Block */}
+          <div style={{ marginBottom: "4rem", maxWidth: "700px", textAlign: "left" }}>
+            <h2 style={{ 
+              fontSize: "clamp(3rem, 6vw, 4.5rem)", 
+              lineHeight: 1.1, 
+              color: "#163321", 
+              marginBottom: "1.5rem",
+              fontWeight: "500",
+              letterSpacing: "-1.5px"
+            }}>
+              <span style={{ display: "block" }}>Numbers</span>
+              <span style={{ display: "block" }}>
+                That <span style={{ color: "#00df81", fontWeight: "600" }}>Speak</span>
+              </span>
+            </h2>
+            <p style={{ 
+              fontSize: "1.4rem", 
+              fontWeight: "400",
+              color: "#163321", 
+              marginBottom: "1rem",
+              lineHeight: 1.4
+            }}>
+              Navigating risks and opportunities for a healthier tomorrow
+            </p>
+            <p style={{
+              fontSize: "1.1rem",
+              color: "#475569",
+              lineHeight: 1.6,
+              fontWeight: "300"
+            }}>
+              Discover key facts, backed by recognized research trends, <br className="hidden md:block"/> that shed light on heart health in our nation.
+            </p>
           </div>
+
+          {/* Grid Block */}
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "1.5rem",
+            marginBottom: "4rem"
+          }}>
+            {[
+              { val: "1.7", unit: "million", text: "people live with cardiovascular disease." },
+              { val: "50", unit: "%", text: "of sudden cardiac deaths occur in people under 50." },
+              { val: "100", unit: "+", text: "deaths per day from cardiovascular disease." },
+              { val: "15", unit: "%", text: "of people in their thirties already deal with high blood pressure." },
+              { val: "9000", unit: "+", text: "deaths per year from strokes." },
+              { val: "100.000", unit: "+", text: "hospital admissions for heart failure per year." }
+            ].map((stat, i) => (
+              <div key={i} style={{
+                backgroundColor: "rgba(255, 255, 255, 0.5)",
+                border: "1px solid rgba(0, 223, 129, 0.2)",
+                borderRadius: "1rem",
+                padding: "3rem 2rem",
+                textAlign: "center",
+                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02)",
+                backdropFilter: "blur(10px)"
+              }}>
+                <div style={{ fontSize: "3.5rem", fontWeight: "600", color: "#163321", marginBottom: "1rem", display: "flex", justifyContent: "center", alignItems: "baseline", gap: "0.25rem", letterSpacing: "-1px" }}>
+                  {stat.val} <span style={{ fontSize: "1.5rem", color: "#00df81", fontWeight: "500", letterSpacing: "normal" }}>{stat.unit}</span>
+                </div>
+                <p style={{ color: "#475569", fontSize: "1.05rem", margin: 0, fontWeight: "300", lineHeight: 1.5 }}>
+                  {stat.text}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Button Block */}
+          <div style={{ textAlign: "center" }}>
+            <Link href="/register" className="btn" style={{
+              backgroundColor: "#00df81",
+              color: "white",
+              padding: "1rem 3rem",
+              borderRadius: "9999px",
+              fontWeight: "400",
+              fontSize: "1.1rem",
+              boxShadow: "0 10px 25px rgba(0, 223, 129, 0.3)",
+              border: "none",
+              transition: "transform 0.2s, box-shadow 0.2s"
+            }}>
+              Book Appointment
+            </Link>
+          </div>
+
         </div>
       </section>
 
@@ -90,10 +263,10 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div style={{ 
-              backgroundColor: "var(--primary)", 
-              borderRadius: "2rem", 
-              padding: "3rem", 
+            <div style={{
+              backgroundColor: "var(--primary)",
+              borderRadius: "2rem",
+              padding: "3rem",
               color: "white",
               boxShadow: "0 20px 40px rgba(16,185,129,0.2)"
             }}>

@@ -47,7 +47,7 @@ export default function AppointmentsPage() {
   const fetchAppointments = async (userId) => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/patient?userId=${userId}`, {
+      const response = await fetch(`http://localhost:5001/api/patient?userId=${userId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -76,7 +76,7 @@ export default function AppointmentsPage() {
     }
 
     try {
-      const response = await fetch(`/api/patient/${selectedAppointment._id}`, {
+      const response = await fetch(`http://localhost:5001/api/patient/${selectedAppointment._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
