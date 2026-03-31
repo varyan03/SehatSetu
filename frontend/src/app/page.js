@@ -369,7 +369,7 @@ export default function Home() {
       </section>
 
       {/* How We Work Section */}
-      <section className="py-24 bg-[#ffffff] relative overflow-hidden">
+      <section className="py-24 relative overflow-hidden" style={{ background: "linear-gradient(180deg, #ffffff 0%, #ffffff 85%, #EACEB9 100%)" }}>
         {/* Subtle Watermark/Background Graphic */}
         <div className="absolute opacity-[0.03] pointer-events-none z-0" style={{ top: "-5%", right: "-5%", width: "800px", height: "800px" }}>
           <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -464,20 +464,32 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section className="section-mint">
+      <section className="relative z-10" style={{ padding: "5rem 1.5rem", backgroundColor: "#EACEB9" }}>
         <div className="container">
           <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-            <h2 style={{ color: "var(--secondary)", marginBottom: "2rem" }}>FAQ</h2>
+            <h2 style={{ color: "#ffff", marginBottom: "3rem", fontSize: "3rem", fontWeight: "450" }}>FAQ<span style={{ color: "#00df81" }}>s</span></h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               {[
-                { q: "How do I book an appointment?", a: "Simply log in to your dashboard and click 'Book New Appointment'." },
-                { q: "Are my medical records secure?", a: "Yes, we use military-grade encryption to protect your health data." },
-                { q: "Can I do a telehealth consultation?", a: "Telehealth features are currently being rolled out to supported regions." }
+                { q: "How do I book an appointment?", a: "Simply log in to your dashboard and click 'Book New Appointment'. Our system will guide you through selecting a specialist and finding an available time slot." },
+                { q: "Are my medical records secure?", a: "Yes, absolutely. We use military-grade encryption to protect your health data. Your information is strictly confidential and shared only with your assigned healthcare providers." },
+                { q: "Can I do a telehealth consultation?", a: "Telehealth features are currently being rolled out to supported regions. When available, you'll see a 'Video Consult' option during the booking process." }
               ].map((faq, i) => (
-                <div key={i} style={{ backgroundColor: "white", padding: "1.5rem", borderRadius: "1rem" }}>
-                  <h4 style={{ margin: 0, fontSize: "1.1rem" }}>{faq.q}</h4>
-                  <p style={{ margin: "0.5rem 0 0", color: "var(--gray-600)" }}>{faq.a}</p>
-                </div>
+                <details key={i} className="group rounded-2xl overflow-hidden shadow-sm hover:shadow-md cursor-pointer border border-transparent hover:border-emerald-500 transition-all duration-300" style={{ backgroundColor: "var(--secondary)" }}>
+                  <summary className="list-none outline-none [&::-webkit-details-marker]:hidden select-none" style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem 1rem" }}>
+                    <span className="font-semibold text-white" style={{ fontSize: "1.15rem", textAlign: "center" }}>
+                      {faq.q}
+                    </span>
+                    <div className="flex items-center justify-center rounded-full group-open:rotate-45 transition-transform duration-300" style={{ position: "absolute", right: "1.25rem", width: "2.5rem", height: "2.5rem", backgroundColor: "rgba(255,255,255,0.1)", color: "#00df81" }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                    </div>
+                  </summary>
+                  <div style={{ padding: "1.5rem 2.5rem", textAlign: "center", backgroundColor: "white" }}>
+                    <p className="m-0 text-[#1f2937] leading-relaxed text-lg">{faq.a}</p>
+                  </div>
+                </details>
               ))}
             </div>
           </div>
