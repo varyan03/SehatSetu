@@ -283,12 +283,12 @@ export default function Home() {
       <section style={{ padding: "0rem 1.5rem 8rem 1.5rem", backgroundColor: "#ffffff" }}>
         <div className="container" style={{ maxWidth: "1200px" }}>
           <div style={{ textAlign: "center", marginBottom: "4rem" }}>
-            <h2 style={{ 
-              fontSize: "clamp(2.5rem, 5vw, 3.5rem)", 
-              color: "#163321", 
-              fontWeight: "700", 
+            <h2 style={{
+              fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
+              color: "#163321",
+              fontWeight: "700",
               letterSpacing: "-1px",
-              marginBottom: "1rem" 
+              marginBottom: "1rem"
             }}>
               Meet our <span style={{ color: "#00df81" }}>Specialists</span>
             </h2>
@@ -296,28 +296,28 @@ export default function Home() {
               Dedicated professionals committed to providing you with the best personalized healthcare experience.
             </p>
           </div>
-          
+
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             gap: "2.5rem"
           }}>
             {[
-              { 
-                name: "Dr. Sarah Jenkins", 
-                role: "Cardiologist", 
+              {
+                name: "Dr. Sarah Jenkins",
+                role: "Cardiologist",
                 img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=600&auto=format&fit=crop",
                 exp: "12+ Years"
               },
-              { 
-                name: "Dr. Michael Chen", 
-                role: "General Practice", 
+              {
+                name: "Dr. Michael Chen",
+                role: "General Practice",
                 img: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=600&auto=format&fit=crop",
                 exp: "15+ Years"
               },
-              { 
-                name: "Dr. Emma Watson", 
-                role: "Pediatrics", 
+              {
+                name: "Dr. Emma Watson",
+                role: "Pediatrics",
                 img: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?q=80&w=600&auto=format&fit=crop",
                 exp: "8+ Years"
               }
@@ -325,12 +325,12 @@ export default function Home() {
               <div key={i} className="specialist-card">
                 <div style={{ position: "relative", height: "320px", width: "100%", overflow: "hidden" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img 
-                    src={doc.img} 
-                    alt={doc.name} 
-                    style={{ 
-                      width: "100%", 
-                      height: "100%", 
+                  <img
+                    src={doc.img}
+                    alt={doc.name}
+                    style={{
+                      width: "100%",
+                      height: "100%",
                       objectFit: "cover",
                       objectPosition: "center top"
                     }}
@@ -354,11 +354,11 @@ export default function Home() {
                 <div style={{ padding: "2rem 1.5rem", textAlign: "left" }}>
                   <h3 style={{ fontSize: "1.4rem", margin: "0 0 0.25rem 0", color: "#163321", fontWeight: "600" }}>{doc.name}</h3>
                   <p style={{ color: "#00df81", margin: 0, fontSize: "1rem", fontWeight: "400" }}>{doc.role}</p>
-                  
+
                   <div style={{ marginTop: "1.5rem", paddingTop: "1.5rem", borderTop: "1px solid #f1f5f9", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span style={{ fontSize: "0.9rem", color: "#94a3b8", fontWeight: "500", transition: "color 0.2s" }} className="view-profile-text">View Profile</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00df81" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "transform 0.2s" }} className="view-profile-icon">
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                      <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                   </div>
                 </div>
@@ -373,13 +373,13 @@ export default function Home() {
         {/* Subtle Watermark/Background Graphic */}
         <div className="absolute opacity-[0.03] pointer-events-none z-0" style={{ top: "-5%", right: "-5%", width: "800px", height: "800px" }}>
           <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
           </svg>
         </div>
 
         <div className="container relative z-10" style={{ maxWidth: "1000px" }}>
           <div className="relative" style={{ backgroundColor: "#EBF1F1", borderRadius: "2rem", padding: "clamp(3rem, 6vw, 5rem)", boxShadow: "0 4px 30px rgba(0,0,0,0.03)" }}>
-            
+
             <div style={{ marginBottom: "4rem" }}>
               <h2 className="font-semibold tracking-tight text-xl md:text-2xl mb-2" style={{ color: "#00df81" }}>
                 From Data to Insight
@@ -390,7 +390,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col" style={{ gap: "4.5rem" }}>
-              
+
               {/* Step 1 */}
               <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: "3rem" }}>
                 <div className="flex gap-6 relative h-full">
@@ -497,26 +497,64 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer>
-        <div className="container">
-          <div className="grid grid-3">
+      <footer style={{
+        position: "relative",
+        backgroundColor: "#EBF1F1",
+        overflow: "hidden",
+        paddingTop: "6rem",
+        paddingBottom: "2rem"
+      }}>
+        {/* Massive Background Typography */}
+        <div style={{
+          position: "absolute",
+          bottom: "-5%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          fontSize: "clamp(6rem, 16vw, 20rem)",
+          fontWeight: "800",
+          color: "#ffffff",
+          whiteSpace: "nowrap",
+          zIndex: 0,
+          pointerEvents: "none",
+          userSelect: "none",
+          letterSpacing: "-0.04em",
+          lineHeight: 0.8,
+          opacity: 0.8
+        }}>
+          SEHAT SETU
+        </div>
+
+        <div className="container" style={{ position: "relative", zIndex: 10 }}>
+          <div className="grid md:grid-cols-3 gap-12 lg:gap-24 mb-16" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))" }}>
             <div>
-              <h3 style={{ color: "white", marginBottom: "1.5rem" }}>Sehat Setu</h3>
-              <p>Your journey to better healthcare accessibility starts right here.</p>
+              {/* Logo Icon Match */}
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "1.75rem", fontWeight: "400", color: "#3d8a62", marginBottom: "1.5rem" }}>
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                  <path d="M9 12h6"></path>
+                  <path d="M12 9v6"></path>
+                </svg>
+                <strong>Sehat</strong>Setu
+              </div>
+              <p style={{ color: "#475569", lineHeight: "1.6" }}>Your journey to better healthcare accessibility starts right here.</p>
             </div>
             <div>
-              <h4 style={{ color: "white", marginBottom: "1.5rem" }}>Quick Links</h4>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <li><Link href="/register">Sign Up</Link></li>
-                <li><Link href="/login">Patient Login</Link></li>
-                <li><Link href="#">Doctor Portal</Link></li>
+              <h4 style={{ color: "#163321", marginBottom: "1.5rem", fontWeight: "600", fontSize: "1.2rem" }}>Quick Links</h4>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem", padding: 0, margin: 0 }}>
+                <li><Link href="/register" className="text-[#475569] hover:text-[#00df81] transition-colors duration-200" style={{ textDecoration: "none" }}>Sign Up</Link></li>
+                <li><Link href="/login" className="text-[#475569] hover:text-[#00df81] transition-colors duration-200" style={{ textDecoration: "none" }}>Patient Login</Link></li>
+                <li><Link href="#" className="text-[#475569] hover:text-[#00df81] transition-colors duration-200" style={{ textDecoration: "none" }}>Doctor Portal</Link></li>
               </ul>
             </div>
             <div>
-              <h4 style={{ color: "white", marginBottom: "1.5rem" }}>Contact</h4>
-              <p>support@sehatsetu.com</p>
-              <p>+1-800-HEALTHY</p>
+              <h4 style={{ color: "#163321", marginBottom: "1.5rem", fontWeight: "600", fontSize: "1.2rem" }}>Contact</h4>
+              <p style={{ color: "#475569", marginBottom: "0.5rem" }}>support@sehatsetu.com</p>
+              <p style={{ color: "#475569" }}>+1-800-HEALTHY</p>
             </div>
+          </div>
+
+          <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid rgba(22, 51, 33, 0.1)", textAlign: "center", color: "#64748B", fontSize: "0.9rem" }}>
+            &copy; {new Date().getFullYear()} Sehat Setu. All rights reserved.
           </div>
         </div>
       </footer>
