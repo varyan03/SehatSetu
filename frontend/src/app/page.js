@@ -28,12 +28,12 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section style={{ 
-        position: "relative", 
-        overflow: "hidden", 
-        paddingTop: "8rem", 
+      <section style={{
+        position: "relative",
+        overflow: "hidden",
+        paddingTop: "8rem",
         paddingBottom: "4rem",
-        backgroundColor: "#EBF1F1", 
+        backgroundColor: "#EBF1F1",
         minHeight: "90vh",
         display: "flex",
         flexDirection: "column",
@@ -48,7 +48,7 @@ export default function Home() {
           transform: "translate(-50%, -50%)",
           fontSize: "clamp(8rem, 25vw, 30rem)",
           fontWeight: "600",
-          color: "#F6F7F9", 
+          color: "#F6F7F9",
           whiteSpace: "nowrap",
           zIndex: 0,
           pointerEvents: "none",
@@ -73,10 +73,10 @@ export default function Home() {
           marginBottom: "-2rem",
           marginTop: "2rem"
         }}>
-          <Image 
-            src="/hero-graphic.png" 
-            alt="Medical 3D Concept" 
-            fill 
+          <Image
+            src="/hero-graphic.png"
+            alt="Medical 3D Concept"
+            fill
             style={{ objectFit: "contain" }}
             priority
             unoptimized={true}
@@ -85,10 +85,10 @@ export default function Home() {
 
         {/* Foreground Content Filling the Gap */}
         <div className="container" style={{ position: "relative", zIndex: 2, textAlign: "center" }}>
-          <h1 style={{ 
-            fontSize: "clamp(3rem, 5.5vw, 5rem)", 
-            lineHeight: 1.1, 
-            marginBottom: "1rem", 
+          <h1 style={{
+            fontSize: "clamp(3rem, 5.5vw, 5rem)",
+            lineHeight: 1.1,
+            marginBottom: "1rem",
             letterSpacing: "-1.5px"
           }}>
             <span style={{ color: "#214D4B", fontWeight: "700", display: "block" }}>Your Health In Focus,</span>
@@ -97,11 +97,11 @@ export default function Home() {
             <span style={{ color: "#55b684ff", fontWeight: "700" }}>fe </span>
             <span style={{ color: "#66CF95", fontWeight: "700" }}>In Balance</span>
           </h1>
-          <p style={{ 
-            fontSize: "1.25rem", 
-            fontWeight: "400", 
-            color: "#214D4B", 
-            marginBottom: "0" 
+          <p style={{
+            fontSize: "1.25rem",
+            fontWeight: "400",
+            color: "#214D4B",
+            marginBottom: "0"
           }}>
             A new perspective on healthcare
           </p>
@@ -127,9 +127,9 @@ export default function Home() {
       </section>
 
       {/* Statistics Section */}
-      <section style={{ 
+      <section style={{
         position: "relative",
-        padding: "8rem 1.5rem 8rem", 
+        padding: "8rem 1.5rem 8rem",
         backgroundColor: "#EBF1F1", /* Soft minty grey matching image background */
         overflow: "hidden"
       }}>
@@ -150,18 +150,18 @@ export default function Home() {
         }}>
           Statistics
         </div>
-        
+
         {/* Content Container */}
         <div className="container" style={{ position: "relative", zIndex: 1, maxWidth: "1200px" }}>
-          
+
           {/* Header Block */}
           <div style={{ marginBottom: "4rem", maxWidth: "700px", textAlign: "left" }}>
-            <h2 style={{ 
-              fontSize: "clamp(3rem, 6vw, 4.5rem)", 
-              lineHeight: 1.1, 
-              color: "#163321", 
+            <h2 style={{
+              fontSize: "clamp(3rem, 6vw, 4.5rem)",
+              lineHeight: 1.1,
+              color: "#163321",
               marginBottom: "1.5rem",
-              fontWeight: "500",
+              fontWeight: "700",
               letterSpacing: "-1.5px"
             }}>
               <span style={{ display: "block" }}>Numbers</span>
@@ -169,10 +169,10 @@ export default function Home() {
                 That <span style={{ color: "#00df81", fontWeight: "600" }}>Speak</span>
               </span>
             </h2>
-            <p style={{ 
-              fontSize: "1.4rem", 
-              fontWeight: "400",
-              color: "#163321", 
+            <p style={{
+              fontSize: "1.4rem",
+              fontWeight: "500",
+              color: "#163321",
               marginBottom: "1rem",
               lineHeight: 1.4
             }}>
@@ -182,9 +182,9 @@ export default function Home() {
               fontSize: "1.1rem",
               color: "#475569",
               lineHeight: 1.6,
-              fontWeight: "300"
+              fontWeight: "400"
             }}>
-              Discover key facts, backed by recognized research trends, <br className="hidden md:block"/> that shed light on heart health in our nation.
+              Discover key facts, backed by recognized research trends, <br className="hidden md:block" /> that shed light on heart health in our nation.
             </p>
           </div>
 
@@ -280,23 +280,185 @@ export default function Home() {
       </section>
 
       {/* Team/Specialists Section */}
-      <section style={{ padding: "6rem 1.5rem", backgroundColor: "#f8fafc" }}>
-        <div className="container">
-          <h2 style={{ textAlign: "center", marginBottom: "3rem" }}>Meet our top specialists</h2>
-          <div className="grid grid-3">
+      <section style={{ padding: "0rem 1.5rem 8rem 1.5rem", backgroundColor: "#ffffff" }}>
+        <div className="container" style={{ maxWidth: "1200px" }}>
+          <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+            <h2 style={{ 
+              fontSize: "clamp(2.5rem, 5vw, 3.5rem)", 
+              color: "#163321", 
+              fontWeight: "700", 
+              letterSpacing: "-1px",
+              marginBottom: "1rem" 
+            }}>
+              Meet our <span style={{ color: "#00df81" }}>Specialists</span>
+            </h2>
+            <p style={{ fontSize: "1.1rem", color: "#475569", maxWidth: "600px", margin: "0 auto" }}>
+              Dedicated professionals committed to providing you with the best personalized healthcare experience.
+            </p>
+          </div>
+          
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "2.5rem"
+          }}>
             {[
-              { name: "Dr. Sarah Jenkins", role: "Cardiologist", icon: "👩‍⚕️" },
-              { name: "Dr. Michael Chen", role: "General Practice", icon: "👨‍⚕️" },
-              { name: "Dr. Emma Watson", role: "Pediatrics", icon: "👩‍⚕️" }
+              { 
+                name: "Dr. Sarah Jenkins", 
+                role: "Cardiologist", 
+                img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=600&auto=format&fit=crop",
+                exp: "12+ Years"
+              },
+              { 
+                name: "Dr. Michael Chen", 
+                role: "General Practice", 
+                img: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=600&auto=format&fit=crop",
+                exp: "15+ Years"
+              },
+              { 
+                name: "Dr. Emma Watson", 
+                role: "Pediatrics", 
+                img: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?q=80&w=600&auto=format&fit=crop",
+                exp: "8+ Years"
+              }
             ].map((doc, i) => (
-              <div key={i} className="card" style={{ textAlign: "center", padding: "2.5rem 1.5rem" }}>
-                <div style={{ fontSize: "4rem", marginBottom: "1rem", backgroundColor: "#ecfdf5", width: "100px", height: "100px", margin: "0 auto 1.5rem", borderRadius: "50%", display: "flex", alignItems: "center", justify: "center", justifyContent: "center" }}>
-                  {doc.icon}
+              <div key={i} className="specialist-card">
+                <div style={{ position: "relative", height: "320px", width: "100%", overflow: "hidden" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img 
+                    src={doc.img} 
+                    alt={doc.name} 
+                    style={{ 
+                      width: "100%", 
+                      height: "100%", 
+                      objectFit: "cover",
+                      objectPosition: "center top"
+                    }}
+                  />
+                  <div style={{
+                    position: "absolute",
+                    bottom: "1rem",
+                    right: "1rem",
+                    backgroundColor: "rgba(255, 255, 255, 0.9)",
+                    backdropFilter: "blur(4px)",
+                    padding: "0.4rem 0.8rem",
+                    borderRadius: "2rem",
+                    fontSize: "0.85rem",
+                    fontWeight: "600",
+                    color: "#00df81",
+                    boxShadow: "0 2px 10px rgba(0,0,0,0.05)"
+                  }}>
+                    {doc.exp}
+                  </div>
                 </div>
-                <h3 style={{ fontSize: "1.25rem", margin: 0 }}>{doc.name}</h3>
-                <p style={{ color: "var(--primary)", fontWeight: "600", marginTop: "0.5rem" }}>{doc.role}</p>
+                <div style={{ padding: "2rem 1.5rem", textAlign: "left" }}>
+                  <h3 style={{ fontSize: "1.4rem", margin: "0 0 0.25rem 0", color: "#163321", fontWeight: "600" }}>{doc.name}</h3>
+                  <p style={{ color: "#00df81", margin: 0, fontSize: "1rem", fontWeight: "400" }}>{doc.role}</p>
+                  
+                  <div style={{ marginTop: "1.5rem", paddingTop: "1.5rem", borderTop: "1px solid #f1f5f9", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.9rem", color: "#94a3b8", fontWeight: "500", transition: "color 0.2s" }} className="view-profile-text">View Profile</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00df81" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "transform 0.2s" }} className="view-profile-icon">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How We Work Section */}
+      <section className="py-24 bg-[#ffffff] relative overflow-hidden">
+        {/* Subtle Watermark/Background Graphic */}
+        <div className="absolute opacity-[0.03] pointer-events-none z-0" style={{ top: "-5%", right: "-5%", width: "800px", height: "800px" }}>
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+
+        <div className="container relative z-10" style={{ maxWidth: "1000px" }}>
+          <div className="relative" style={{ backgroundColor: "#EBF1F1", borderRadius: "2rem", padding: "clamp(3rem, 6vw, 5rem)", boxShadow: "0 4px 30px rgba(0,0,0,0.03)" }}>
+            
+            <div style={{ marginBottom: "4rem" }}>
+              <h2 className="font-semibold tracking-tight text-xl md:text-2xl mb-2" style={{ color: "#00df81" }}>
+                From Data to Insight
+              </h2>
+              <h3 className="font-bold tracking-tight text-4xl m-0" style={{ color: "#163321", letterSpacing: "-1px" }}>
+                How We Work
+              </h3>
+            </div>
+
+            <div className="flex flex-col" style={{ gap: "4.5rem" }}>
+              
+              {/* Step 1 */}
+              <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: "3rem" }}>
+                <div className="flex gap-6 relative h-full">
+                  <div className="flex flex-col items-center flex-shrink-0">
+                    <div className="rounded-full text-white flex items-center justify-center text-xl font-semibold z-10" style={{ width: "3.5rem", height: "3.5rem", backgroundColor: "#00df81" }}>
+                      01
+                    </div>
+                    {/* Vertical Line spanning height plus gap */}
+                    <div className="hidden md:block absolute w-[2px] z-0" style={{ backgroundColor: "#00df81", top: "3.5rem", bottom: "-4.5rem", left: "1.7rem" }}></div>
+                  </div>
+                  <div style={{ paddingTop: "0.5rem" }}>
+                    <h4 className="text-2xl font-semibold mt-0" style={{ color: "#163321", marginBottom: "0.75rem" }}>Data Collection & Intake</h4>
+                    <p className="leading-relaxed mb-0" style={{ color: "#475569", fontSize: "1.05rem" }}>
+                      Begin by securely entering your health data and symptoms into our platform. Our intuitive interface ensures that your medical history, current conditions, and lifestyle factors are accurately recorded to form a comprehensive health profile.
+                    </p>
+                  </div>
+                </div>
+                <div className="overflow-hidden" style={{ height: "260px", borderRadius: "1.5rem", boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=800&auto=format&fit=crop" alt="Patient consultation providing health background" className="w-full h-full object-cover" />
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: "3rem" }}>
+                <div className="flex gap-6 relative h-full">
+                  <div className="flex flex-col items-center flex-shrink-0">
+                    <div className="rounded-full text-white flex items-center justify-center text-xl font-semibold z-10" style={{ width: "3.5rem", height: "3.5rem", backgroundColor: "#00df81" }}>
+                      02
+                    </div>
+                    {/* Vertical Line */}
+                    <div className="hidden md:block absolute w-[2px] z-0" style={{ backgroundColor: "#00df81", top: "3.5rem", bottom: "-4.5rem", left: "1.7rem" }}></div>
+                  </div>
+                  <div style={{ paddingTop: "0.5rem" }}>
+                    <h4 className="text-2xl font-semibold mt-0" style={{ color: "#163321", marginBottom: "0.75rem" }}>AI-Powered Analysis</h4>
+                    <p className="leading-relaxed mb-0" style={{ color: "#475569", fontSize: "1.05rem" }}>
+                      Our advanced artificial intelligence algorithms process your information in real-time. By cross-referencing your symptoms with vast medical databases, the AI identifies potential concerns and generates a preliminary health assessment with high precision.
+                    </p>
+                  </div>
+                </div>
+                <div className="overflow-hidden" style={{ height: "260px", borderRadius: "1.5rem", boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="https://images.unsplash.com/photo-1530497610245-94d3c16cda28?q=80&w=800&auto=format&fit=crop" alt="Medical professional analyzing data" className="w-full h-full object-cover" />
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: "3rem" }}>
+                <div className="flex gap-6 relative h-full">
+                  <div className="flex flex-col items-center flex-shrink-0">
+                    <div className="rounded-full text-white flex items-center justify-center text-xl font-semibold z-10" style={{ width: "3.5rem", height: "3.5rem", backgroundColor: "#00df81" }}>
+                      03
+                    </div>
+                  </div>
+                  <div style={{ paddingTop: "0.5rem" }}>
+                    <h4 className="text-2xl font-semibold mt-0" style={{ color: "#163321", marginBottom: "0.75rem" }}>Specialist Assignment</h4>
+                    <p className="leading-relaxed mb-0" style={{ color: "#475569", fontSize: "1.05rem" }}>
+                      Based on the AI's diagnostic insights, our system automatically matches you with the most qualified doctor for your specific needs. You'll receive a personalized care plan and direct access to your dedicated healthcare professional.
+                    </p>
+                  </div>
+                </div>
+                <div className="overflow-hidden" style={{ height: "260px", borderRadius: "1.5rem", boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop" alt="Patient and specialist matching" className="w-full h-full object-cover" />
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </section>
