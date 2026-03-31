@@ -2,7 +2,8 @@
 
 /* ============ ROOT VARIABLES ============ */
 :root {
-  --primary: #3d8a62;
+  /* --secondary-bg:#EBF1F1; */
+  --primary: #00df81;
   --primary-dark: #2c6e4b;
   --primary-light: #4caf7d;
   --secondary: #224d35;
@@ -174,6 +175,39 @@ button {
 .card:hover {
   box-shadow: var(--shadow-xl);
   transform: translateY(-5px);
+}
+
+/* ============ SPECIALIST CARDS ============ */
+.specialist-card {
+  background: #EBF1F1;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid var(--gray-100);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.specialist-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.specialist-card img {
+  transition: transform 0.5s ease;
+}
+
+.specialist-card:hover img {
+  transform: scale(1.05);
+}
+
+.specialist-card:hover .view-profile-text {
+  color: var(--primary);
+}
+
+.specialist-card:hover .view-profile-icon {
+  transform: translateX(4px);
 }
 
 /* ============ NAVIGATION ============ */
