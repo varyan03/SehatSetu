@@ -253,13 +253,13 @@ export default function Home() {
               </p>
               <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2rem" }}>
                 <li style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontWeight: "600" }}>
-                  <span style={{ color: "var(--primary)" }}>✓</span> Personalized health insights
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00df81" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Personalized health insights
                 </li>
                 <li style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontWeight: "600" }}>
-                  <span style={{ color: "var(--primary)" }}>✓</span> Secure medical records
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00df81" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Secure medical records
                 </li>
                 <li style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontWeight: "600" }}>
-                  <span style={{ color: "var(--primary)" }}>✓</span> Instant doctor communication
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00df81" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Instant doctor communication
                 </li>
               </ul>
             </div>
@@ -517,7 +517,8 @@ export default function Home() {
           zIndex: 0,
           pointerEvents: "none",
           userSelect: "none",
-          letterSpacing: "-0.04em",
+          letterSpacing: "0.15em",
+          wordSpacing: "-0.2em",
           lineHeight: 0.8,
           opacity: 0.8
         }}>

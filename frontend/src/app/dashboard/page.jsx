@@ -7,6 +7,7 @@ import Link from "next/link";
 export default function DashboardPage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -32,19 +33,19 @@ export default function DashboardPage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)"
+        backgroundColor: "#EBF1F1"
       }}>
         <div style={{ textAlign: "center" }}>
           <div style={{ 
             width: "50px", 
             height: "50px", 
-            border: "3px solid #e5e7eb",
-            borderTop: "3px solid #6366f1",
+            border: "3px solid rgba(0, 223, 129, 0.1)",
+            borderTop: "3px solid #00df81",
             borderRadius: "50%",
             margin: "0 auto 1rem",
             animation: "spin 1s linear infinite"
           }}></div>
-          <p style={{ color: "#6b7280" }}>Loading...</p>
+          <p style={{ color: "#64748b" }}>Loading...</p>
         </div>
       </div>
     );
@@ -52,188 +53,406 @@ export default function DashboardPage() {
 
   if (!user) return null;
 
+  const navLinks = [
+    { name: "Dashboard", href: "/dashboard", icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+    )},
+    { name: "Intake", href: "/patient-form", icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+    )},
+    { name: "Schedule", href: "/appointments", icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+    )},
+  ];
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      {/* Navigation */}
-      <nav style={{ background: "white", boxShadow: "var(--shadow-md)" }}>
-        <div className="container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "1.25rem" }}>
-          <div className="nav-brand">🏥 Sehat Setu</div>
-          <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
-            <span style={{ fontSize: "0.95rem", color: "#6b7280" }}>{user.email}</span>
-            <button
-              onClick={handleLogout}
-              className="btn btn-primary"
-              style={{ padding: "0.65rem 1.25rem", fontSize: "0.95rem" }}
+    <div style={{ 
+      display: "flex", 
+      minHeight: "100vh", 
+      backgroundColor: "#EBF1F1",
+      background: "radial-gradient(circle at 0% 0%, rgba(0, 223, 129, 0.12) 0%, transparent 60%), radial-gradient(circle at 100% 100%, rgba(22, 51, 33, 0.08) 0%, transparent 70%), radial-gradient(circle at 100% 0%, rgba(0, 223, 129, 0.07) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4) 0%, transparent 80%), #EBF1F1",
+      position: "relative", 
+      overflowX: "hidden" 
+    }}>
+      
+      {/* Sidebar Navigation (Expandable) */}
+      <aside 
+        onMouseEnter={() => setIsSidebarExpanded(true)}
+        onMouseLeave={() => setIsSidebarExpanded(false)}
+        style={{
+          width: isSidebarExpanded ? "280px" : "86px",
+          backgroundColor: "white",
+          borderRight: "1px solid #e2e8f0",
+          display: "flex",
+          flexDirection: "column",
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          zIndex: 50,
+          padding: isSidebarExpanded ? "2rem 1.5rem" : "2rem 1rem",
+          transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+          boxShadow: isSidebarExpanded ? "10px 0 30px rgba(0,0,0,0.05)" : "none"
+        }}>
+        {/* Brand Logo */}
+        <div style={{ 
+          display: "flex", 
+          alignItems: "center", 
+          gap: "1rem", 
+          fontSize: "1.5rem", 
+          color: "#3d8a62", 
+          marginBottom: "3rem", 
+          paddingLeft: "0.5rem",
+          overflow: "hidden"
+        }}>
+          <div style={{ minWidth: "32px", display: "flex", justifyContent: "center" }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+              <path d="M9 12h6"></path>
+              <path d="M12 9v6"></path>
+            </svg>
+          </div>
+          <div style={{ 
+            opacity: isSidebarExpanded ? 1 : 0, 
+            visibility: isSidebarExpanded ? "visible" : "hidden",
+            transition: "all 0.3s ease",
+            whiteSpace: "nowrap",
+            fontWeight: "700"
+          }}>
+            <strong style={{ color: "#3d8a62" }}>Sehat</strong><span style={{ color: "#163321" }}>Setu</span>
+          </div>
+        </div>
+
+        {/* Navigation Links */}
+        <nav style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          {navLinks.map((link) => (
+            <Link 
+              key={link.name} 
+              href={link.href} 
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1.25rem",
+                padding: "1rem",
+                borderRadius: "1rem",
+                color: link.href === "/dashboard" ? "#163321" : "#64748b",
+                backgroundColor: link.href === "/dashboard" ? "#f0fdf4" : "transparent",
+                textDecoration: "none",
+                fontWeight: "600",
+                fontSize: "1rem",
+                transition: "all 0.2s",
+                whiteSpace: "nowrap"
+              }}
+              onMouseOver={(e) => {
+                if (link.href !== "/dashboard") e.currentTarget.style.backgroundColor = "#f8fafc";
+              }}
+              onMouseOut={(e) => {
+                if (link.href !== "/dashboard") e.currentTarget.style.backgroundColor = "transparent";
+              }}
             >
-              Logout
-            </button>
+              <div style={{ minWidth: "24px", display: "flex", justifyContent: "center", color: link.href === "/dashboard" ? "#00df81" : "inherit" }}>{link.icon}</div>
+              <span style={{ 
+                opacity: isSidebarExpanded ? 1 : 0, 
+                visibility: isSidebarExpanded ? "visible" : "hidden",
+                transition: "all 0.3s ease"
+              }}>
+                {link.name}
+              </span>
+            </Link>
+          ))}
+        </nav>
+
+        {/* User Profile Snippet (Refined) */}
+        <div style={{ marginTop: "auto", paddingTop: "2rem", borderTop: "1px solid #f1f5f9" }}>
+          <div style={{ 
+            marginBottom: "1.5rem", 
+            paddingLeft: "0.5rem", 
+            opacity: isSidebarExpanded ? 1 : 0, 
+            visibility: isSidebarExpanded ? "visible" : "hidden",
+            transition: "all 0.3s ease",
+            height: isSidebarExpanded ? "auto" : "0px",
+            overflow: "hidden"
+          }}>
+            <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.25rem" }}>Patient Account</p>
+            <p style={{ margin: 0, fontSize: "0.95rem", color: "#163321", fontWeight: "700", overflow: "hidden", textOverflow: "ellipsis" }}>{user.email.split("@")[0]}</p>
           </div>
+          <button
+            onClick={handleLogout}
+            style={{ 
+              width: "100%",
+              backgroundColor: "#163321", 
+              color: "white", 
+              padding: "0.85rem", 
+              borderRadius: "1.25rem", 
+              border: "none", 
+              fontWeight: "600", 
+              cursor: "pointer",
+              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: isSidebarExpanded ? "0.75rem" : "0",
+              overflow: "hidden"
+            }}
+            onMouseOver={(e) => { e.currentTarget.style.backgroundColor = "#00df81"; }}
+            onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "#163321"; }}
+          >
+            <div style={{ minWidth: "24px", display: "flex", justifyContent: "center" }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            </div>
+            <span style={{ 
+              opacity: isSidebarExpanded ? 1 : 0,
+              maxWidth: isSidebarExpanded ? "100px" : "0px",
+              transition: "all 0.3s ease",
+              whiteSpace: "nowrap",
+              fontSize: "0.9rem"
+            }}>Sign Out</span>
+          </button>
         </div>
-      </nav>
+      </aside>
 
-      {/* Main Content */}
-      <main style={{ flex: 1, padding: "3rem 1.5rem" }}>
-        <div className="container">
-          {/* Welcome Section */}
-          <div className="card" style={{ marginBottom: "2.5rem", background: "linear-gradient(135deg, #6366f1 0%, #06b6d4 100%)", color: "white" }}>
-            <div>
-              <h2 style={{ color: "white", marginBottom: "0.5rem" }}>Welcome back, {user.email.split("@")[0]}! 👋</h2>
-              <p style={{ color: "rgba(255,255,255,0.9)", marginBottom: "0" }}>You're logged in as a {user.role}</p>
-            </div>
-          </div>
+      {/* Main Content Side */}
+      <div style={{ flex: 1, position: "relative", overflowY: "auto", maxHeight: "100vh" }}>
+        
+        {/* Background Typography (Watermark) */}
+        <div style={{
+          position: "absolute",
+          top: "80%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          fontSize: "clamp(5rem, 20vw, 25rem)",
+          fontWeight: "900",
+          color: "rgba(255, 255, 255, 0.6)",
+          whiteSpace: "nowrap",
+          zIndex: 0,
+          pointerEvents: "none",
+          userSelect: "none",
+          letterSpacing: "0.1em"
+        }}>
+          Dash Board
+        </div>
 
-          {/* Quick Stats */}
-          <div className="grid grid-3" style={{ marginBottom: "2.5rem" }}>
-            {[
-              { icon: "📋", label: "Total Forms", value: "1", color: "#6366f1" },
-              { icon: "🏥", label: "Departments", value: "8", color: "#06b6d4" },
-              { icon: "👨‍⚕️", label: "Doctors", value: "50+", color: "#10b981" },
-            ].map((stat, idx) => (
-              <div key={idx} className="card" style={{ textAlign: "center" }}>
-                <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>{stat.icon}</div>
-                <div style={{ fontSize: "0.9rem", color: "#6b7280", marginBottom: "0.5rem" }}>{stat.label}</div>
-                <div style={{ fontSize: "2rem", fontWeight: 700, color: stat.color }}>{stat.value}</div>
-              </div>
-            ))}
-          </div>
+        {/* Global Nav for Mobile (Optional, hidden on desktop if needed, but let's keep content focused) */}
+        <main style={{ 
+          padding: "4rem 4rem", 
+          paddingLeft: "5rem", 
+          position: "relative", 
+          zIndex: 1,
+          transition: "padding-left 0.4s ease"
+        }}>
+          <div className="container" style={{ maxWidth: "1000px", margin: "0 auto" }}>
+            {/* Welcome Header */}
+            <header style={{ marginBottom: "3.5rem", textAlign: "center" }}>
+              <h1 style={{ fontSize: "2.75rem", color: "#ffffff", fontWeight: "800", letterSpacing: "-1px", marginBottom: "0.5rem", textShadow: "0 2px 4px rgba(0,0,0,0.05)" }}>
+                Welcome back, <span style={{ color: "#00df81" }}>{user.email.split("@")[0]}!</span>
+              </h1>
+              <p style={{ fontSize: "1.1rem", color: "#475569" }}>
+                Here's what's happening with your health today.
+              </p>
+            </header>
 
-          {/* Action Cards */}
-          <h3 style={{ marginBottom: "1.5rem", marginTop: "2rem" }}>Quick Actions</h3>
-          <div className="grid grid-2">
-            {/* Patient Form Card */}
-            <div className="card" style={{ transition: "var(--transition)", cursor: "pointer" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-                <div style={{
-                  width: "50px",
-                  height: "50px",
-                  background: "linear-gradient(135deg, #6366f1 0%, #818cf8 100%)",
-                  borderRadius: "0.75rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "1.5rem"
+            {/* Quick Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem", marginBottom: "3rem" }}>
+              {[
+                { label: "AI Intake Forms", value: "1", subtext: "Completed", color: "#10b981", bg: "#f0fdf4" },
+                { label: "Active Doctors", value: "54", subtext: "Matching specialization", color: "#3b82f6", bg: "#eff6ff" },
+                { label: "Upcoming Appts", value: "0", subtext: "Next 7 days", color: "#f59e0b", bg: "#fffbeb" },
+              ].map((stat, idx) => (
+                <div key={idx} style={{ 
+                  backgroundColor: "white", 
+                  padding: "2rem", 
+                  borderRadius: "1.5rem", 
+                  border: "1px solid #e2e8f0", 
+                  boxShadow: "0 10px 15px -10px rgba(0, 0, 0, 0.05)" 
                 }}>
-                  📋
+                  <div style={{ width: "3rem", height: "3rem", backgroundColor: stat.bg, borderRadius: "1rem", marginBottom: "1.25rem", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.25rem" }}>
+                    {idx === 0 ? (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                    ) : idx === 1 ? (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18"></path><path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3"></path><path d="M19 21V11"></path><path d="M5 21V11"></path><path d="M9 21V11"></path><path d="M15 21V11"></path></svg>
+                    ) : (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    )}
+                  </div>
+                  <p style={{ margin: 0, fontSize: "0.9rem", color: "#64748b", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.05em" }}>{stat.label}</p>
+                  <h2 style={{ margin: "0.5rem 0", fontSize: "2.25rem", color: "#163321", fontWeight: "800" }}>{stat.value}</h2>
+                  <p style={{ margin: 0, fontSize: "0.85rem", color: "#94a3b8" }}>{stat.subtext}</p>
                 </div>
-                <div>
-                  <h4 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.25rem" }}>Patient Information</h4>
-                  <p style={{ fontSize: "0.9rem", color: "#6b7280", marginBottom: "0" }}>Fill out your medical details</p>
-                </div>
-              </div>
-              <Link href="/patient-form" className="btn btn-primary" style={{ width: "100%", marginTop: "1rem" }}>
-                Fill Form →
-              </Link>
+              ))}
             </div>
 
-            {/* Medical Records Card */}
-            <div className="card" style={{ opacity: 0.6, pointerEvents: "none" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-                <div style={{
-                  width: "50px",
-                  height: "50px",
-                  background: "linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%)",
-                  borderRadius: "0.75rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "1.5rem"
-                }}>
-                  🏥
-                </div>
-                <div>
-                  <h4 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.25rem" }}>Medical Records</h4>
-                  <p style={{ fontSize: "0.9rem", color: "#6b7280", marginBottom: "0" }}>View your health history</p>
-                </div>
-              </div>
-              <button className="btn btn-secondary" style={{ width: "100%", marginTop: "1rem", opacity: 0.7, cursor: "not-allowed" }}>
-                Coming Soon
-              </button>
-            </div>
-
-            {/* Appointments Card */}
-            <div className="card" style={{ transition: "var(--transition)", cursor: "pointer" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-                <div style={{
-                  width: "50px",
-                  height: "50px",
-                  background: "linear-gradient(135deg, #10b981 0%, #6ee7b7 100%)",
-                  borderRadius: "0.75rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "1.5rem"
-                }}>
-                  📅
-                </div>
-                <div>
-                  <h4 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.25rem" }}>Appointments</h4>
-                  <p style={{ fontSize: "0.9rem", color: "#6b7280", marginBottom: "0" }}>Book or view appointments</p>
-                </div>
-              </div>
-              <Link href="/appointments" className="btn btn-primary" style={{ width: "100%", marginTop: "1rem" }}>
-                View Appointments →
-              </Link>
-            </div>
-
-            {/* Doctor Chat Card */}
-            <div className="card" style={{ opacity: 0.6, pointerEvents: "none" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-                <div style={{
-                  width: "50px",
-                  height: "50px",
-                  background: "linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)",
-                  borderRadius: "0.75rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "1.5rem"
-                }}>
-                  💬
-                </div>
-                <div>
-                  <h4 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.25rem" }}>Contact Doctor</h4>
-                  <p style={{ fontSize: "0.9rem", color: "#6b7280", marginBottom: "0" }}>Message your doctor</p>
-                </div>
-              </div>
-              <button className="btn btn-secondary" style={{ width: "100%", marginTop: "1rem", opacity: 0.7, cursor: "not-allowed" }}>
-                Coming Soon
-              </button>
-            </div>
-          </div>
-
-          {/* Profile Section */}
-          <div className="card" style={{ marginTop: "2.5rem" }}>
-            <h3 style={{ marginBottom: "1.5rem" }}>Profile Information</h3>
-            <div className="grid grid-2">
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "2rem" }}>
+              {/* Action Area */}
               <div>
-                <label style={{ fontSize: "0.85rem", color: "#6b7280", textTransform: "uppercase", fontWeight: 600 }}>Email</label>
-                <p style={{ fontSize: "1.1rem", marginTop: "0.5rem" }}>{user.email}</p>
+                <h3 style={{ fontSize: "1.5rem", color: "#163321", fontWeight: "700", marginBottom: "1.5rem" }}>Core Actions</h3>
+                <div style={{ display: "grid", gap: "1.5rem" }}>
+                  <div style={{ 
+                    backgroundColor: "white", 
+                    padding: "2rem", 
+                    borderRadius: "1.5rem", 
+                    border: "1px solid #e2e8f0", 
+                    display: "flex", 
+                    justifyContent: "space-between", 
+                    alignItems: "center" 
+                  }}>
+                    <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
+                      <div style={{ width: "3.5rem", height: "3.5rem", backgroundColor: "#f0fdf4", borderRadius: "1.25rem", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.75rem", color: "#10b981" }}>
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                      </div>
+                      <div>
+                        <h4 style={{ margin: 0, fontSize: "1.15rem", color: "#163321", fontWeight: "700" }}>Medical Intake Form</h4>
+                        <p style={{ margin: 0, fontSize: "0.95rem", color: "#64748b" }}>Analyze symptoms with our AI assistant</p>
+                      </div>
+                    </div>
+                    <Link href="/patient-form" style={{ 
+                      backgroundColor: "#163321", 
+                      color: "white", 
+                      padding: "0.75rem 1.5rem", 
+                      borderRadius: "0.75rem", 
+                      textDecoration: "none", 
+                      fontWeight: "600",
+                      transition: "all 0.2s"
+                    }}
+                    onMouseOver={(e) => e.target.style.backgroundColor = "#00df81"}
+                    onMouseOut={(e) => e.target.style.backgroundColor = "#163321"}
+                    >
+                      Start Analysis
+                    </Link>
+                  </div>
+
+                  <div style={{ 
+                    backgroundColor: "white", 
+                    padding: "2rem", 
+                    borderRadius: "1.5rem", 
+                    border: "1px solid #e2e8f0", 
+                    display: "flex", 
+                    justifyContent: "space-between", 
+                    alignItems: "center" 
+                  }}>
+                    <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
+                      <div style={{ width: "3.5rem", height: "3.5rem", backgroundColor: "#eff6ff", borderRadius: "1.25rem", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.75rem", color: "#3b82f6" }}>
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                      </div>
+                      <div>
+                        <h4 style={{ margin: 0, fontSize: "1.15rem", color: "#163321", fontWeight: "700" }}>My Appointments</h4>
+                        <p style={{ margin: 0, fontSize: "0.95rem", color: "#64748b" }}>Manage your bookings and consults</p>
+                      </div>
+                    </div>
+                    <Link href="/appointments" style={{ 
+                      backgroundColor: "#163321", 
+                      color: "white", 
+                      padding: "0.75rem 1.5rem", 
+                      borderRadius: "0.75rem", 
+                      textDecoration: "none", 
+                      fontWeight: "600",
+                      transition: "all 0.2s"
+                    }}
+                    onMouseOver={(e) => e.target.style.backgroundColor = "#00df81"}
+                    onMouseOut={(e) => e.target.style.backgroundColor = "#163321"}
+                    >
+                      View Schedule
+                    </Link>
+                  </div>
+                </div>
               </div>
+
+              {/* Sidebar info */}
               <div>
-                <label style={{ fontSize: "0.85rem", color: "#6b7280", textTransform: "uppercase", fontWeight: 600 }}>Role</label>
-                <p style={{ fontSize: "1.1rem", marginTop: "0.5rem" }}>{user.role}</p>
-              </div>
-              <div style={{ gridColumn: "1 / -1" }}>
-                <label style={{ fontSize: "0.85rem", color: "#6b7280", textTransform: "uppercase", fontWeight: 600 }}>User ID</label>
-                <p style={{ fontSize: "0.9rem", marginTop: "0.5rem", fontFamily: "monospace", wordBreak: "break-all" }}>{user.id}</p>
+                <h3 style={{ fontSize: "1.5rem", color: "#163321", fontWeight: "700", marginBottom: "1.5rem" }}>Security</h3>
+                <div style={{ 
+                  backgroundColor: "#163321", 
+                  padding: "2rem", 
+                  borderRadius: "2rem", 
+                  color: "white",
+                  position: "relative",
+                  overflow: "hidden"
+                }}>
+                  <div style={{ position: "relative", zIndex: 1 }}>
+                    <div style={{ fontSize: "2rem", marginBottom: "1rem" }}>
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <h4 style={{ color: "white", fontSize: "1.1rem", fontWeight: "700", marginBottom: "0.75rem" }}>Your Privacy Matters</h4>
+                    <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", lineHeight: "1.6", margin: 0 }}>
+                      Your health data is protected with military-grade encryption and only accessible to authorized medical staff.
+                    </p>
+                  </div>
+                  {/* Subtle graphic element */}
+                  <div style={{ position: "absolute", bottom: "-10%", right: "-10%", opacity: 0.1 }}>
+                    <svg width="150" height="150" viewBox="0 0 24 24" fill="white">
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
 
-      {/* Footer */}
-      <footer style={{ background: "#1f2937", color: "#d1d5db", padding: "2rem 1.5rem", marginTop: "auto" }}>
-        <div className="container" style={{ textAlign: "center", fontSize: "0.9rem" }}>
-          <p>&copy; 2026 Sehat Setu. All rights reserved.</p>
-        </div>
-      </footer>
+        {/* Footer from Home Page */}
+        <footer style={{ 
+          position: "relative", 
+          backgroundColor: "#EBF1F1", 
+          overflow: "hidden", 
+          paddingTop: "6rem", 
+          paddingBottom: "2rem",
+          borderTop: "1px solid rgba(22, 51, 33, 0.05)"
+        }}>
+          <div style={{
+            position: "absolute",
+            bottom: "-5%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            fontSize: "clamp(6rem, 16vw, 12rem)",
+            fontWeight: "800",
+            color: "#ffffff",
+            whiteSpace: "nowrap",
+            zIndex: 0,
+            pointerEvents: "none",
+            userSelect: "none",
+            letterSpacing: "0.15em",
+            wordSpacing: "-0.2em",
+            lineHeight: 0.8,
+            opacity: 0.6
+          }}>
+            SEHAT SETU
+          </div>
+
+          <div className="container" style={{ position: "relative", zIndex: 10, maxWidth: "1000px", margin: "0 auto" }}>
+            <div className="grid md:grid-cols-3 gap-12 lg:gap-24 mb-16" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "1.75rem", fontWeight: "400", color: "#3d8a62", marginBottom: "1.5rem" }}>
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                    <path d="M9 12h6"></path>
+                    <path d="M12 9v6"></path>
+                  </svg>
+                  <strong>Sehat</strong>Setu
+                </div>
+                <p style={{ color: "#475569", lineHeight: "1.6" }}>Your journey to better healthcare accessibility starts right here.</p>
+              </div>
+              <div>
+                <h4 style={{ color: "#163321", marginBottom: "1.5rem", fontWeight: "600", fontSize: "1.2rem" }}>Quick Links</h4>
+                <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem", padding: 0, margin: 0 }}>
+                  <li><Link href="/register" style={{ color: "#475569", textDecoration: "none", transition: "color 0.2s" }}>Sign Up</Link></li>
+                  <li><Link href="/login" style={{ color: "#475569", textDecoration: "none", transition: "color 0.2s" }}>Patient Login</Link></li>
+                  <li><Link href="#" style={{ color: "#475569", textDecoration: "none", transition: "color 0.2s" }}>Doctor Portal</Link></li>
+                </ul>
+              </div>
+              <div>
+                <h4 style={{ color: "#163321", marginBottom: "1.5rem", fontWeight: "600", fontSize: "1.2rem" }}>Contact</h4>
+                <p style={{ color: "#475569", marginBottom: "0.5rem" }}>support@sehatsetu.com</p>
+                <p style={{ color: "#475569" }}>+1-800-HEALTHY</p>
+              </div>
+            </div>
+            
+            <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid rgba(22, 51, 33, 0.1)", textAlign: "center", color: "#64748B", fontSize: "0.9rem" }}>
+              &copy; {new Date().getFullYear()} Sehat Setu. All rights reserved.
+            </div>
+          </div>
+        </footer>
+      </div>
 
       <style>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       `}</style>
     </div>
   );

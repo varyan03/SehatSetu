@@ -93,7 +93,7 @@ export default function AppointmentsPage() {
         return;
       }
 
-      alert("✅ Slot booked successfully!");
+      alert("Slot booked successfully!");
       setShowSlotBooking(false);
       setSelectedSlot("");
       fetchAppointments(user.id);
@@ -146,416 +146,316 @@ export default function AppointmentsPage() {
 
   if (loading) {
     return (
-      <div
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
-        }}
-      >
+      <div style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#EBF1F1"
+      }}>
         <div style={{ textAlign: "center" }}>
-          <div
-            style={{
-              width: "50px",
-              height: "50px",
-              border: "3px solid #e5e7eb",
-              borderTop: "3px solid #6366f1",
-              borderRadius: "50%",
-              margin: "0 auto 1rem",
-              animation: "spin 1s linear infinite",
-            }}
-          ></div>
-          <p style={{ color: "#6b7280", fontSize: "1.1rem" }}>
-            Loading your appointments...
-          </p>
+          <div style={{ 
+            width: "50px", 
+            height: "50px", 
+            border: "3px solid rgba(0, 223, 129, 0.1)",
+            borderTop: "3px solid #00df81",
+            borderRadius: "50%",
+            margin: "0 auto 1rem",
+            animation: "spin 1s linear infinite"
+          }}></div>
+          <p style={{ color: "#64748b" }}>Loading appointments...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        padding: "2rem 1.5rem",
-        background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
-      }}
-    >
-      <div className="container" style={{ maxWidth: "1000px" }}>
+    <div style={{
+      minHeight: "100vh",
+      padding: "4rem 1.5rem",
+      backgroundColor: "#EBF1F1",
+      position: "relative",
+      overflow: "hidden"
+    }}>
+      {/* Background Typography */}
+      {/* <div style={{
+        position: "absolute",
+        top: "30%",
+        left: "50%",
+        transform: "translateX(-50%)",
+        fontSize: "clamp(8rem, 25vw, 35rem)",
+        fontWeight: "900",
+        color: "rgba(255, 255, 255, 0.6)",
+        whiteSpace: "nowrap",
+        zIndex: 0,
+        pointerEvents: "none",
+        userSelect: "none",
+        letterSpacing: "0.1em"
+      }}>
+        Schedule
+      </div> */}
+
+      <div className="container" style={{ maxWidth: "1000px", position: "relative", zIndex: 1 }}>
         {/* Header */}
-        <div style={{ marginBottom: "2rem" }}>
+        <div style={{ marginBottom: "3rem" }}>
           <button
             onClick={() => router.push("/dashboard")}
             style={{
               background: "none",
               border: "none",
-              color: "#6366f1",
-              fontSize: "1rem",
+              color: "#10b981",
+              fontSize: "0.95rem",
               marginBottom: "1rem",
               cursor: "pointer",
-              fontWeight: 600,
+              fontWeight: "600",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: 0
             }}
           >
             ← Back to Dashboard
           </button>
-          <h1 style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>
-            📋 My Appointments
-          </h1>
-          <p style={{ color: "#6b7280", fontSize: "1.1rem" }}>
-            View and manage your appointment requests
-          </p>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+              <h1 style={{ fontSize: "2.75rem", fontWeight: "800", color: "#163321", letterSpacing: "-1px", marginBottom: "0.5rem" }}>
+                My Appointments
+              </h1>
+              <p style={{ color: "#475569", fontSize: "1.1rem" }}>
+                View and manage your consultation requests
+              </p>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "1.5rem", fontWeight: "400", color: "#3d8a62" }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                <path d="M9 12h6"></path>
+                <path d="M12 9v6"></path>
+              </svg>
+              <strong>Sehat</strong>Setu
+            </div>
+          </div>
         </div>
 
         {/* Error Alert */}
         {error && (
-          <div className="alert alert-error" style={{ marginBottom: "1.5rem" }}>
-            <span>⚠️</span>
+          <div style={{ 
+            backgroundColor: "#fef2f2", 
+            border: "1px solid #fee2e2", 
+            color: "#b91c1c", 
+            padding: "1.25rem", 
+            borderRadius: "1.25rem", 
+            marginBottom: "2rem", 
+            display: "flex", 
+            alignItems: "center", 
+            gap: "0.75rem"
+          }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.71a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
             <span>{error}</span>
           </div>
         )}
 
-        {/* Stats */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-            gap: "1.5rem",
-            marginBottom: "2rem",
-          }}
-        >
-          <div
-            className="card"
-            style={{
-              padding: "1.5rem",
-              borderLeft: "4px solid #f59e0b",
-            }}
-          >
-            <p style={{ color: "#6b7280", fontSize: "0.9rem", marginBottom: "0.5rem" }}>
-              Pending
-            </p>
-            <p style={{ fontSize: "2rem", fontWeight: "bold", color: "#f59e0b" }}>
-              {appointments.filter((a) => a.appointmentStatus === "Pending").length}
-            </p>
-          </div>
-
-          <div
-            className="card"
-            style={{
-              padding: "1.5rem",
-              borderLeft: "4px solid #3b82f6",
-            }}
-          >
-            <p style={{ color: "#6b7280", fontSize: "0.9rem", marginBottom: "0.5rem" }}>
-              Scheduled
-            </p>
-            <p style={{ fontSize: "2rem", fontWeight: "bold", color: "#3b82f6" }}>
-              {appointments.filter((a) => a.appointmentStatus === "Scheduled").length}
-            </p>
-          </div>
-
-          <div
-            className="card"
-            style={{
-              padding: "1.5rem",
-              borderLeft: "4px solid #10b981",
-            }}
-          >
-            <p style={{ color: "#6b7280", fontSize: "0.9rem", marginBottom: "0.5rem" }}>
-              Completed
-            </p>
-            <p style={{ fontSize: "2rem", fontWeight: "bold", color: "#10b981" }}>
-              {appointments.filter((a) => a.appointmentStatus === "Completed").length}
-            </p>
-          </div>
+        {/* Stats Grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1.5rem", marginBottom: "3rem" }}>
+          {[
+            { label: "Pending", value: appointments.filter((a) => a.appointmentStatus === "Pending").length, color: "#f59e0b", bg: "#fffbeb" },
+            { label: "Scheduled", value: appointments.filter((a) => a.appointmentStatus === "Scheduled").length, color: "#3b82f6", bg: "#eff6ff" },
+            { label: "Completed", value: appointments.filter((a) => a.appointmentStatus === "Completed").length, color: "#10b981", bg: "#f0fdf4" },
+          ].map((stat, idx) => (
+            <div key={idx} style={{ 
+              backgroundColor: "white", 
+              padding: "1.75rem", 
+              borderRadius: "1.5rem", 
+              border: "1px solid #e2e8f0", 
+              boxShadow: "0 10px 15px -10px rgba(0, 0, 0, 0.05)",
+              borderLeft: `5px solid ${stat.color}`
+            }}>
+              <p style={{ margin: 0, fontSize: "0.9rem", color: "#64748b", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.05em" }}>{stat.label}</p>
+              <h2 style={{ margin: "0.25rem 0 0 0", fontSize: "2.25rem", color: "#163321", fontWeight: "800" }}>{stat.value}</h2>
+            </div>
+          ))}
         </div>
 
         {/* Appointments List */}
         {appointments.length === 0 ? (
-          <div
-            className="card"
-            style={{
-              padding: "3rem",
-              textAlign: "center",
-              background: "linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%)",
-            }}
-          >
-            <p style={{ fontSize: "3rem", marginBottom: "1rem" }}>📭</p>
-            <h3 style={{ color: "#1e40af", marginBottom: "0.5rem" }}>
-              No Appointments Yet
-            </h3>
-            <p style={{ color: "#3b82f6", marginBottom: "2rem" }}>
-              Fill out the patient form to request an appointment
+          <div style={{ 
+            backgroundColor: "white", 
+            padding: "5rem 2rem", 
+            borderRadius: "2.5rem", 
+            textAlign: "center", 
+            border: "1px solid #e2e8f0",
+            boxShadow: "0 20px 40px -20px rgba(0, 0, 0, 0.05)"
+          }}>
+            <div style={{ margin: "0 auto 2rem", width: "100px", height: "100px", backgroundColor: "#f8fafc", borderRadius: "2rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.5C2 7 4 5 6.5 5H18c2.2 0 4 1.8 4 4v7.5Z"></path><polyline points="2 9.5 12 15 22 9.5"></polyline></svg>
+            </div>
+            <h3 style={{ fontSize: "1.5rem", color: "#163321", fontWeight: "700", marginBottom: "0.75rem" }}>No Appointments Yet</h3>
+            <p style={{ color: "#64748b", marginBottom: "2.5rem", maxWidth: "400px", margin: "0 auto 2.5rem" }}>
+              Ready to take control of your cardiovascular health? Start by describing your symptoms.
             </p>
             <button
               onClick={() => router.push("/patient-form")}
-              className="btn btn-primary"
+              style={{ 
+                backgroundColor: "#163321", 
+                color: "white", 
+                padding: "1rem 2.5rem", 
+                borderRadius: "1rem", 
+                fontSize: "1.1rem", 
+                fontWeight: "600", 
+                border: "none", 
+                cursor: "pointer",
+                transition: "all 0.2s"
+              }}
+              onMouseOver={(e) => e.target.style.backgroundColor = "#00df81"}
+              onMouseOut={(e) => e.target.style.backgroundColor = "#163321"}
             >
-              Create New Appointment
+              Start AI Analysis
             </button>
           </div>
         ) : (
-          <div>
+          <div style={{ display: "grid", gap: "1.5rem" }}>
             {appointments.map((appointment, index) => (
               <div
                 key={appointment._id}
-                className="card"
                 style={{
-                  padding: "2rem",
-                  marginBottom: "1.5rem",
-                  borderTop: `4px solid ${getStatusColor(appointment.appointmentStatus)}`,
+                  backgroundColor: "white",
+                  padding: "2.5rem",
+                  borderRadius: "2rem",
+                  border: "1px solid #e2e8f0",
+                  boxShadow: "0 10px 30px -15px rgba(0, 0, 0, 0.05)",
+                  position: "relative",
+                  overflow: "hidden"
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "start",
-                    marginBottom: "1rem",
-                  }}
-                >
+                <div style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "6px",
+                  height: "100%",
+                  backgroundColor: getStatusColor(appointment.appointmentStatus)
+                }}></div>
+
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "2rem" }}>
                   <div>
-                    <h3 style={{ fontSize: "1.3rem", marginBottom: "0.5rem" }}>
+                    <h3 style={{ fontSize: "1.5rem", fontWeight: "700", color: "#163321", marginBottom: "0.25rem" }}>
                       {appointment.fullName}
                     </h3>
-                    <p style={{ color: "#6b7280" }}>
-                      Request #{index + 1} • {new Date(appointment.createdAt).toLocaleDateString()}
+                    <p style={{ color: "#64748b", fontSize: "0.95rem" }}>
+                      Request #{appointments.length - index} • {new Date(appointment.createdAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
                     </p>
                   </div>
                   <div>{getStatusBadge(appointment.appointmentStatus)}</div>
                 </div>
 
-                {/* Appointment Details Grid */}
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                    gap: "1.5rem",
-                    marginBottom: "1.5rem",
-                    paddingBottom: "1.5rem",
-                    borderBottom: "1px solid #e5e7eb",
-                  }}
-                >
+                <div style={{ 
+                  display: "grid", 
+                  gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", 
+                  gap: "2rem", 
+                  paddingBottom: "2rem",
+                  borderBottom: "1px solid #f1f5f9",
+                  marginBottom: "2rem"
+                }}>
                   <div>
-                    <p style={{ color: "#6b7280", fontSize: "0.9rem" }}>Department</p>
-                    <p style={{ fontWeight: 600, fontSize: "1.05rem" }}>
-                      {appointment.department}
-                    </p>
+                    <p style={{ color: "#94a3b8", fontSize: "0.85rem", fontWeight: "600", textTransform: "uppercase", marginBottom: "0.5rem" }}>Department</p>
+                    <p style={{ color: "#163321", fontWeight: "700", fontSize: "1.1rem" }}>{appointment.department}</p>
                   </div>
-
                   <div>
-                    <p style={{ color: "#6b7280", fontSize: "0.9rem" }}>Contact</p>
-                    <p style={{ fontWeight: 600, fontSize: "1.05rem" }}>
-                      {appointment.contact}
-                    </p>
+                    <p style={{ color: "#94a3b8", fontSize: "0.85rem", fontWeight: "600", textTransform: "uppercase", marginBottom: "0.5rem" }}>Patient Contact</p>
+                    <p style={{ color: "#163321", fontWeight: "700", fontSize: "1.1rem" }}>{appointment.contact}</p>
                   </div>
-
-                  <div>
-                    <p style={{ color: "#6b7280", fontSize: "0.9rem" }}>Date of Birth</p>
-                    <p style={{ fontWeight: 600, fontSize: "1.05rem" }}>
-                      {new Date(appointment.dob).toLocaleDateString()}
-                    </p>
-                  </div>
-
                   {appointment.appointmentDate && (
                     <div>
-                      <p style={{ color: "#6b7280", fontSize: "0.9rem" }}>
-                        Appointment Date
-                      </p>
-                      <p style={{ fontWeight: 600, fontSize: "1.05rem", color: "#3b82f6" }}>
-                        {appointment.appointmentDate}
-                      </p>
+                      <p style={{ color: "#94a3b8", fontSize: "0.85rem", fontWeight: "600", textTransform: "uppercase", marginBottom: "0.5rem" }}>Scheduled For</p>
+                      <p style={{ color: "#3b82f6", fontWeight: "800", fontSize: "1.1rem" }}>{appointment.appointmentDate}</p>
                     </div>
                   )}
-
                   {appointment.assignedDoctor && (
                     <div>
-                      <p style={{ color: "#6b7280", fontSize: "0.9rem" }}>Assigned Doctor</p>
-                      <p style={{ fontWeight: 600, fontSize: "1.05rem", color: "#10b981" }}>
-                        {appointment.assignedDoctor}
-                      </p>
+                      <p style={{ color: "#94a3b8", fontSize: "0.85rem", fontWeight: "600", textTransform: "uppercase", marginBottom: "0.5rem" }}>Assigned Specialist</p>
+                      <p style={{ color: "#10b981", fontWeight: "800", fontSize: "1.1rem" }}>{appointment.assignedDoctor}</p>
                     </div>
                   )}
                 </div>
 
-                {/* Symptoms */}
-                <div style={{ marginBottom: "1.5rem" }}>
-                  <p style={{ color: "#6b7280", fontSize: "0.9rem", marginBottom: "0.5rem" }}>
-                    Symptoms
-                  </p>
-                  <p
-                    style={{
-                      background: "#f3f4f6",
-                      padding: "1rem",
-                      borderRadius: "0.5rem",
-                      lineHeight: "1.6",
-                    }}
-                  >
+                <div style={{ marginBottom: "2rem" }}>
+                  <p style={{ color: "#94a3b8", fontSize: "0.85rem", fontWeight: "600", textTransform: "uppercase", marginBottom: "0.75rem" }}>Patient Symptoms</p>
+                  <p style={{ backgroundColor: "#f8fafc", padding: "1.25rem", borderRadius: "1.15rem", color: "#475569", lineHeight: "1.6", border: "1px solid #f1f5f9" }}>
                     {appointment.symptoms}
                   </p>
                 </div>
 
-                {/* Notes */}
-                {appointment.notes && (
-                  <div style={{ marginBottom: "1.5rem" }}>
-                    <p style={{ color: "#6b7280", fontSize: "0.9rem", marginBottom: "0.5rem" }}>
-                      Doctor's Notes
-                    </p>
-                    <p
-                      style={{
-                        background: "#dbeafe",
-                        padding: "1rem",
-                        borderRadius: "0.5rem",
-                        borderLeft: "4px solid #3b82f6",
-                        lineHeight: "1.6",
-                      }}
-                    >
-                      {appointment.notes}
-                    </p>
-                  </div>
-                )}
-
-                {/* Action Buttons */}
-                <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+                <div style={{ display: "flex", gap: "1rem" }}>
                   {appointment.appointmentStatus === "Pending" && (
                     <button
                       onClick={() => {
                         setSelectedAppointment(appointment);
                         setShowSlotBooking(true);
                       }}
-                      className="btn btn-primary"
                       style={{
-                        flex: "1",
-                        minWidth: "150px",
-                      }}
-                    >
-                      ⏳ Awaiting Approval
-                    </button>
-                  )}
-
-                  {appointment.appointmentStatus === "Scheduled" && (
-                    <button
-                      className="btn"
-                      style={{
-                        flex: "1",
-                        minWidth: "150px",
-                        background: "#10b981",
+                        flex: 1,
+                        backgroundColor: "#163321",
                         color: "white",
-                        cursor: "not-allowed",
-                        opacity: 0.9,
-                        pointerEvents: "none",
+                        padding: "1rem",
+                        borderRadius: "1rem",
+                        fontWeight: "600",
+                        border: "none",
+                        cursor: "pointer",
+                        transition: "all 0.2s"
                       }}
-                      disabled
+                      onMouseOver={(e) => e.target.style.backgroundColor = "#00df81"}
+                      onMouseOut={(e) => e.target.style.backgroundColor = "#163321"}
                     >
-                      ✅ Appointment Scheduled
+                      Wait for Specialist Confirmation
                     </button>
                   )}
-
-                  {appointment.appointmentStatus === "Completed" && (
-                    <button
-                      className="btn"
-                      style={{
-                        flex: "1",
-                        minWidth: "150px",
-                        background: "#10b981",
-                        color: "white",
-                        cursor: "not-allowed",
-                        opacity: 0.9,
-                        pointerEvents: "none",
-                      }}
-                      disabled
-                    >
-                      ✅ Completed
-                    </button>
-                  )}
-
-                  <button
-                    onClick={() => router.push("/patient-form")}
-                    className="btn btn-primary"
-                    style={{ flex: "1", minWidth: "150px" }}
-                  >
-                    + New Request
-                  </button>
                 </div>
               </div>
             ))}
           </div>
         )}
 
-        {/* Slot Booking Modal */}
+        {/* Slot Booking Modal (Minimalist) */}
         {showSlotBooking && selectedAppointment && (
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: "rgba(0, 0, 0, 0.5)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              zIndex: 1000,
-              padding: "1.5rem",
-            }}
-          >
-            <div
-              className="card"
-              style={{ maxWidth: "500px", width: "100%", padding: "2rem" }}
-            >
-              <h2 style={{ marginBottom: "1.5rem" }}>📅 Book Appointment Slot</h2>
+          <div style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(22, 51, 33, 0.4)",
+            backdropFilter: "blur(4px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+            padding: "1.5rem"
+          }}>
+            <div style={{ 
+              backgroundColor: "white", 
+              maxWidth: "500px", 
+              width: "100%", 
+              padding: "3rem", 
+              borderRadius: "2.5rem", 
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.2)" 
+            }}>
+              <h2 style={{ fontSize: "1.75rem", fontWeight: "800", color: "#163321", marginBottom: "0.5rem" }}>Select Time Slot</h2>
+              <p style={{ color: "#64748b", marginBottom: "2rem" }}>Choose a preferred time for your consultation.</p>
 
-              <p style={{ color: "#6b7280", marginBottom: "1rem" }}>
-                For: <strong>{selectedAppointment.fullName}</strong> •{" "}
-                <strong>{selectedAppointment.department}</strong>
-              </p>
-
-              <p
-                style={{
-                  color: "#6b7280",
-                  fontSize: "0.9rem",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                Select your preferred time slot:
-              </p>
-
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                  gap: "1rem",
-                  marginBottom: "1.5rem",
-                }}
-              >
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.75rem", marginBottom: "2rem" }}>
                 {availableSlots.map((slot) => (
                   <button
                     key={slot}
                     onClick={() => setSelectedSlot(slot)}
                     style={{
                       padding: "0.75rem",
-                      borderRadius: "0.5rem",
-                      border: "2px solid #e5e7eb",
-                      background:
-                        selectedSlot === slot ? "#6366f1" : "white",
-                      color: selectedSlot === slot ? "white" : "#1f2937",
-                      fontWeight: 600,
+                      borderRadius: "1rem",
+                      border: selectedSlot === slot ? "2px solid #00df81" : "1px solid #e2e8f0",
+                      background: selectedSlot === slot ? "#f0fdf4" : "white",
+                      color: selectedSlot === slot ? "#10b981" : "#163321",
+                      fontWeight: selectedSlot === slot ? "700" : "600",
                       cursor: "pointer",
-                      transition: "all 0.2s",
-                      textDecoration: "none",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (selectedSlot !== slot) {
-                        e.target.style.background = "#f3f4f6";
-                        e.target.style.borderColor = "#6366f1";
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (selectedSlot !== slot) {
-                        e.target.style.background = "white";
-                        e.target.style.borderColor = "#e5e7eb";
-                      }
+                      fontSize: "0.85rem",
+                      transition: "all 0.2s"
                     }}
                   >
                     {slot}
@@ -563,39 +463,18 @@ export default function AppointmentsPage() {
                 ))}
               </div>
 
-              {selectedSlot && (
-                <p
-                  style={{
-                    background: "#d1fae5",
-                    padding: "1rem",
-                    borderRadius: "0.5rem",
-                    color: "#065f46",
-                    marginBottom: "1.5rem",
-                    textAlign: "center",
-                    fontWeight: 600,
-                  }}
-                >
-                  ✅ Selected: {selectedSlot}
-                </p>
-              )}
-
               <div style={{ display: "flex", gap: "1rem" }}>
                 <button
-                  onClick={() => {
-                    setShowSlotBooking(false);
-                    setSelectedSlot("");
-                  }}
-                  className="btn btn-secondary"
-                  style={{ flex: 1 }}
+                  onClick={() => { setShowSlotBooking(false); setSelectedSlot(""); }}
+                  style={{ flex: 1, padding: "1rem", borderRadius: "1rem", border: "1px solid #e2e8f0", backgroundColor: "white", color: "#64748b", fontWeight: "600", cursor: "pointer" }}
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleBookSlot}
-                  className="btn btn-primary"
-                  style={{ flex: 1 }}
+                  style={{ flex: 1, padding: "1rem", borderRadius: "1rem", border: "none", backgroundColor: "#163321", color: "white", fontWeight: "700", cursor: "pointer" }}
                 >
-                  Confirm Booking
+                  Confirm
                 </button>
               </div>
             </div>
@@ -604,10 +483,7 @@ export default function AppointmentsPage() {
       </div>
 
       <style>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       `}</style>
     </div>
   );
