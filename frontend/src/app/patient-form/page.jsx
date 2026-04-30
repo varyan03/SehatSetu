@@ -115,10 +115,14 @@ export default function PatientFormPage() {
         return;
       }
 
+      if (data.patient?._id) {
+        localStorage.setItem("latestPatientId", data.patient._id);
+      }
+
       setSubmitted(true);
       // Wait a bit longer so user can see the prediction before redirect
       setTimeout(() => {
-        router.push("/dashboard");
+        router.push("/waiting-room");
       }, 5000);
     } catch (err) {
       setError("An error occurred. Please try again.");

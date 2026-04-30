@@ -5,20 +5,19 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function DashboardPage() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user] = useState(() => {
+    if (typeof window === "undefined") return null;
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (!storedUser) {
+    if (!user) {
       router.push("/login");
-      return;
     }
-    setUser(JSON.parse(storedUser));
-    setLoading(false);
-  }, [router]);
+  }, [router, user]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -26,36 +25,14 @@ export default function DashboardPage() {
     router.push("/login");
   };
 
-  if (loading) {
-    return (
-      <div style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#EBF1F1"
-      }}>
-        <div style={{ textAlign: "center" }}>
-          <div style={{ 
-            width: "50px", 
-            height: "50px", 
-            border: "3px solid rgba(0, 223, 129, 0.1)",
-            borderTop: "3px solid #00df81",
-            borderRadius: "50%",
-            margin: "0 auto 1rem",
-            animation: "spin 1s linear infinite"
-          }}></div>
-          <p style={{ color: "#64748b" }}>Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
   if (!user) return null;
 
   const navLinks = [
     { name: "Dashboard", href: "/dashboard", icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+    )},
+    { name: "Waiting Room", href: "/waiting-room", icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18"></path><path d="M5 21V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14"></path><path d="M9 21v-6h6v6"></path><path d="M10 11h4"></path></svg>
     )},
     { name: "Intake", href: "/patient-form", icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
@@ -246,7 +223,7 @@ export default function DashboardPage() {
                 Welcome back, <span style={{ color: "#00df81" }}>{user.email.split("@")[0]}!</span>
               </h1>
               <p style={{ fontSize: "1.1rem", color: "#475569" }}>
-                Here's what's happening with your health today.
+                Here&apos;s what&apos;s happening with your health today.
               </p>
             </header>
 
@@ -316,6 +293,40 @@ export default function DashboardPage() {
                     onMouseOut={(e) => e.target.style.backgroundColor = "#163321"}
                     >
                       Start Analysis
+                    </Link>
+                  </div>
+
+                  <div style={{ 
+                    backgroundColor: "white", 
+                    padding: "2rem", 
+                    borderRadius: "1.5rem", 
+                    border: "1px solid #e2e8f0", 
+                    display: "flex", 
+                    justifyContent: "space-between", 
+                    alignItems: "center" 
+                  }}>
+                    <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
+                      <div style={{ width: "3.5rem", height: "3.5rem", backgroundColor: "#f0fdf4", borderRadius: "1.25rem", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.75rem", color: "#10b981" }}>
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18"></path><path d="M5 21V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14"></path><path d="M9 21v-6h6v6"></path><path d="M10 11h4"></path></svg>
+                      </div>
+                      <div>
+                        <h4 style={{ margin: 0, fontSize: "1.15rem", color: "#163321", fontWeight: "700" }}>Waiting Room</h4>
+                        <p style={{ margin: 0, fontSize: "0.95rem", color: "#64748b" }}>Track queue position and updates</p>
+                      </div>
+                    </div>
+                    <Link href="/waiting-room" style={{ 
+                      backgroundColor: "#163321", 
+                      color: "white", 
+                      padding: "0.75rem 1.5rem", 
+                      borderRadius: "0.75rem", 
+                      textDecoration: "none", 
+                      fontWeight: "600",
+                      transition: "all 0.2s"
+                    }}
+                    onMouseOver={(e) => e.target.style.backgroundColor = "#00df81"}
+                    onMouseOut={(e) => e.target.style.backgroundColor = "#163321"}
+                    >
+                      View Queue
                     </Link>
                   </div>
 

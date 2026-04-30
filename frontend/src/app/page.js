@@ -448,7 +448,7 @@ export default function Home() {
                   <div style={{ paddingTop: "0.5rem" }}>
                     <h4 className="text-2xl font-semibold mt-0" style={{ color: "#163321", marginBottom: "0.75rem" }}>Specialist Assignment</h4>
                     <p className="leading-relaxed mb-0" style={{ color: "#475569", fontSize: "1.05rem" }}>
-                      Based on the AI's diagnostic insights, our system automatically matches you with the most qualified doctor for your specific needs. You'll receive a personalized care plan and direct access to your dedicated healthcare professional.
+                      Based on the AI&apos;s diagnostic insights, our system automatically matches you with the most qualified doctor for your specific needs. You&apos;ll receive a personalized care plan and direct access to your dedicated healthcare professional.
                     </p>
                   </div>
                 </div>

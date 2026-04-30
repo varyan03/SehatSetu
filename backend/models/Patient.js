@@ -67,8 +67,37 @@ const PatientSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    // Queue system fields (optional)
+    queuePosition: {
+      type: Number,
+      default: null,
+      index: true,
+    },
+    queueStatus: {
+      type: String,
+      enum: ["waiting", "attending", "completed", "bumped", "cancelled"],
+      default: null,
+    },
+    queueDate: {
+      type: Date,
+      default: null,
+    },
+    estimatedTime: {
+      type: Number,
+      default: null,
+    },
+    checkInTime: {
+      type: Date,
+      default: null,
+    },
+    completedTime: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true }
 );
+
+PatientSchema.index({ department: 1, appointmentDate: 1, queuePosition: 1 });
 
 module.exports = mongoose.models.Patient || mongoose.model("Patient", PatientSchema);
