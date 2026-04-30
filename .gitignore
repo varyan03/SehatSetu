@@ -10,12 +10,13 @@ out/
 build/
 .swc/
 
-# Environment Variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# Environment Variables and Keys
+.env*
+*.pem
+*.key
+*.cert
+*.p12
+*.crt
 
 # Python / AI Model
 __pycache__/
@@ -72,3 +73,10 @@ Icon
 # Logging
 logs/
 *.log
+
+# Internal Documentation & Implementation Plans
+ARCHITECTURE_ANALYSIS.md
+IMPLEMENTATION-2.md
+PROJECT_DOCUMENTATION.md
+BONUS_IMPLEMENTATION.md
+*.md.bak
