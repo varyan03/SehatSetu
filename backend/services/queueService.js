@@ -38,6 +38,13 @@ const getDayRange = (date) => {
   return { start, end };
 };
 
+const isSameDay = (left, right) => {
+  if (!left || !right) return false;
+  const { start, end } = getDayRange(left);
+  const compare = new Date(right);
+  return compare >= start && compare <= end;
+};
+
 class QueueService {
   async addToQueue(patientId, department, appointmentDate) {
     const useTransactions = shouldUseTransactions();
@@ -67,6 +74,15 @@ class QueueService {
 
       if (apptDate < today) {
         throw new Error("Appointment date cannot be in the past");
+      }
+
+      const completedSameDay = isSameDay(patient.appointmentDate, apptDate);
+      if (
+        (patient.queueStatus === "completed" ||
+          patient.appointmentStatus === "Completed") &&
+        completedSameDay
+      ) {
+        throw new Error("Appointment already completed");
       }
 
       const targetDepartment = normalizeDepartment(
@@ -137,6 +153,7 @@ class QueueService {
     if (doctor.currentPatient) {
       await Patient.findByIdAndUpdate(doctor.currentPatient, {
         queueStatus: "completed",
+        appointmentStatus: "Completed",
         completedTime: new Date(),
         queuePosition: null,
       });

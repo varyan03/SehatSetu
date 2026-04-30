@@ -1,13 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+
+const API_BASE_URL = "http://localhost:5001";
+const POLL_INTERVAL_MS = 15000;
 
 export default function AppointmentsPage() {
   const [user, setUser] = useState(null);
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [lastUpdated, setLastUpdated] = useState(null);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [showSlotBooking, setShowSlotBooking] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState("");
@@ -29,6 +33,36 @@ export default function AppointmentsPage() {
     "04:30 PM",
   ];
 
+  const fetchAppointments = useCallback(async (userId) => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `${API_BASE_URL}/api/patient?userId=${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          cache: "no-store",
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Failed to fetch appointments");
+        return;
+      }
+
+  setAppointments(data.patients || data || []);
+  setLastUpdated(new Date());
+    } catch (err) {
+      setError("Error fetching appointments");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     const checkAuth = () => {
       const storedUser = localStorage.getItem("user");
@@ -42,32 +76,16 @@ export default function AppointmentsPage() {
     };
 
     checkAuth();
-  }, [router]);
+  }, [fetchAppointments, router]);
 
-  const fetchAppointments = async (userId) => {
-    try {
-      setLoading(true);
-      const response = await fetch(`http://localhost:5001/api/patient?userId=${userId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+  useEffect(() => {
+    if (!user?.id) return undefined;
+    const interval = setInterval(() => {
+      fetchAppointments(user.id);
+    }, POLL_INTERVAL_MS);
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.error || "Failed to fetch appointments");
-        return;
-      }
-
-      setAppointments(data.patients || data || []);
-    } catch (err) {
-      setError("Error fetching appointments");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    return () => clearInterval(interval);
+  }, [fetchAppointments, user?.id]);
 
   const handleBookSlot = async () => {
     if (!selectedSlot || !selectedAppointment) {
@@ -76,12 +94,13 @@ export default function AppointmentsPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5001/api/patient/${selectedAppointment._id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/patient/${selectedAppointment._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
+        cache: "no-store",
         body: JSON.stringify({
           appointmentStatus: "Scheduled",
           appointmentDate: selectedSlot,
@@ -216,7 +235,7 @@ export default function AppointmentsPage() {
           >
             ← Back to Dashboard
           </button>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1.5rem", flexWrap: "wrap" }}>
             <div>
               <h1 style={{ fontSize: "2.75rem", fontWeight: "800", color: "#163321", letterSpacing: "-1px", marginBottom: "0.5rem" }}>
                 My Appointments
@@ -224,14 +243,35 @@ export default function AppointmentsPage() {
               <p style={{ color: "#475569", fontSize: "1.1rem" }}>
                 View and manage your consultation requests
               </p>
+              {lastUpdated && (
+                <p style={{ color: "#94a3b8", fontSize: "0.9rem", marginTop: "0.35rem" }}>
+                  Last updated: {lastUpdated.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
+                </p>
+              )}
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "1.5rem", fontWeight: "400", color: "#3d8a62" }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-                <path d="M9 12h6"></path>
-                <path d="M12 9v6"></path>
-              </svg>
-              <strong>Sehat</strong>Setu
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <button
+                onClick={() => user?.id && fetchAppointments(user.id)}
+                style={{
+                  border: "1px solid #d1fae5",
+                  backgroundColor: "#ecfdf3",
+                  color: "#047857",
+                  padding: "0.65rem 1.1rem",
+                  borderRadius: "0.9rem",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                }}
+              >
+                Refresh
+              </button>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "1.5rem", fontWeight: "400", color: "#3d8a62" }}>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                  <path d="M9 12h6"></path>
+                  <path d="M12 9v6"></path>
+                </svg>
+                <strong>Sehat</strong>Setu
+              </div>
             </div>
           </div>
         </div>

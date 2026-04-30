@@ -56,6 +56,14 @@ router.get("/", async (req, res) => {
     const { userId } = req.query;
 
     if (userId) {
+      await Patient.updateMany(
+        {
+          userId,
+          queueStatus: "completed",
+          appointmentStatus: { $ne: "Completed" },
+        },
+        { appointmentStatus: "Completed" }
+      );
       const patients = await Patient.find({ userId })
         .populate("userId", "email role")
         .sort({ createdAt: -1 });
@@ -66,6 +74,13 @@ router.get("/", async (req, res) => {
     }
 
     // Admin/dashboard
+    await Patient.updateMany(
+      {
+        queueStatus: "completed",
+        appointmentStatus: { $ne: "Completed" },
+      },
+      { appointmentStatus: "Completed" }
+    );
     const patients = await Patient.find()
       .populate("userId", "email role")
       .sort({ createdAt: -1 });
