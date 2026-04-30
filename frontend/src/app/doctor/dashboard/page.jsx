@@ -80,13 +80,20 @@ export default function DoctorDashboardPage() {
     }
   }, []);
 
-  const fetchQueue = useCallback(async () => {
+  const fetchQueue = useCallback(async (overrideDepartment) => {
     try {
       const token = getToken();
+      const targetDepartment = overrideDepartment || department;
       const response = await fetch(
-        `${API_BASE_URL}/api/queue/department/${department}`,
+        `${API_BASE_URL}/api/queue/department/${encodeURIComponent(
+          targetDepartment
+        )}`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Cache-Control": "no-cache",
+          },
+          cache: "no-store",
         }
       );
 
@@ -102,6 +109,39 @@ export default function DoctorDashboardPage() {
       setError(err.message || "Failed to fetch queue");
     }
   }, [department]);
+
+  const handleDepartmentChange = async (nextDepartment) => {
+    if (!nextDepartment) return;
+    setActionLoading(true);
+    try {
+      const token = getToken();
+      const response = await fetch(`${API_BASE_URL}/api/doctor/department`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
+        },
+        cache: "no-store",
+        body: JSON.stringify({ department: nextDepartment }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to update department");
+      }
+
+      setDepartment(nextDepartment);
+      setDoctorProfile(data.doctor || null);
+      await fetchQueue(nextDepartment);
+      setError("");
+    } catch (err) {
+      console.error("Department update error:", err);
+      setError(err.message || "Failed to update department");
+    } finally {
+      setActionLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!user) return;
@@ -296,7 +336,7 @@ export default function DoctorDashboardPage() {
               </label>
               <select
                 value={department}
-                onChange={(e) => setDepartment(e.target.value)}
+                onChange={(e) => handleDepartmentChange(e.target.value)}
                 style={{
                   width: "100%",
                   padding: "0.75rem 1rem",
