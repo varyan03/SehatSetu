@@ -59,8 +59,11 @@ router.get("/", async (req, res) => {
       await Patient.updateMany(
         {
           userId,
-          queueStatus: "completed",
           appointmentStatus: { $ne: "Completed" },
+          $or: [
+            { queueStatus: "completed" },
+            { completedTime: { $ne: null } },
+          ],
         },
         { appointmentStatus: "Completed" }
       );
@@ -76,8 +79,8 @@ router.get("/", async (req, res) => {
     // Admin/dashboard
     await Patient.updateMany(
       {
-        queueStatus: "completed",
         appointmentStatus: { $ne: "Completed" },
+        $or: [{ queueStatus: "completed" }, { completedTime: { $ne: null } }],
       },
       { appointmentStatus: "Completed" }
     );

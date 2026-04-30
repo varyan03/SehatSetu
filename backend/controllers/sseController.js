@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Patient = require("../models/Patient");
 const { sseService } = require("../services/sseService");
+const { normalizeDepartment } = require("../utils/department");
 
 exports.streamQueueUpdates = async (req, res) => {
   try {
@@ -25,7 +26,8 @@ exports.streamQueueUpdates = async (req, res) => {
       return res.status(400).json({ error: "Patient not in active queue" });
     }
 
-    sseService.addConnection(patientId, patient.department, res, req);
+  const department = normalizeDepartment(patient.department);
+  sseService.addConnection(patientId, department, res, req);
 
     const queueService = require("../services/queueService");
     const queueInfo = await queueService.getPatientQueueInfo(patientId);

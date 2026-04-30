@@ -1,21 +1,8 @@
 const mongoose = require("mongoose");
 const Patient = require("../models/Patient");
 const Doctor = require("../models/Doctor");
-
-const normalizeDepartment = (department) => {
-  if (!department) return department;
-  if (department === "General Medicine") return "General";
-  return department;
-};
-
-const buildDepartmentFilter = (department) => {
-  const normalized = normalizeDepartment(department);
-  if (!normalized) return null;
-  if (normalized === "General") {
-    return { $in: ["General", "General Medicine"] };
-  }
-  return normalized;
-};
+const { normalizeDepartment, buildDepartmentFilter } = require("../utils/department");
+const { sseService } = require("./sseService");
 
 const shouldUseTransactions = () => {
   if (process.env.DISABLE_QUEUE_TRANSACTIONS === "true") {
@@ -150,7 +137,9 @@ class QueueService {
       throw new Error("Doctor not found");
     }
 
+    let completedPatientId = null;
     if (doctor.currentPatient) {
+      completedPatientId = doctor.currentPatient.toString();
       await Patient.findByIdAndUpdate(doctor.currentPatient, {
         queueStatus: "completed",
         appointmentStatus: "Completed",
@@ -189,6 +178,16 @@ class QueueService {
     await doctor.save();
 
     await this.recalculatePositions(doctor.department, today);
+
+    const normalizedDepartment = normalizeDepartment(doctor.department);
+    await sseService.broadcastQueueUpdate(normalizedDepartment);
+
+    if (completedPatientId) {
+      sseService.notifyPatient(completedPatientId, "appointment_completed", {
+        message: "Your appointment has been completed.",
+        completedTime: new Date().toISOString(),
+      });
+    }
 
     return {
       message: "Moved to next patient",
@@ -254,7 +253,9 @@ class QueueService {
       return null;
     }
 
-    const doctor = await Doctor.findOne({ department: patient.department });
+    const doctor = await Doctor.findOne({
+      department: buildDepartmentFilter(patient.department),
+    });
     const estimatedTime = await this.calculateEstimatedTime(patientId);
 
     return {

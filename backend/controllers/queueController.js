@@ -1,5 +1,7 @@
 const queueService = require("../services/queueService");
 const Patient = require("../models/Patient");
+const { sseService } = require("../services/sseService");
+const { normalizeDepartment } = require("../utils/department");
 
 exports.joinQueue = async (req, res) => {
   try {
@@ -21,6 +23,8 @@ exports.joinQueue = async (req, res) => {
       department,
       appointmentDate
     );
+
+    await sseService.broadcastQueueUpdate(normalizeDepartment(result.department));
 
     return res.status(200).json({
       message: "Successfully joined queue",
@@ -99,6 +103,8 @@ exports.leaveQueue = async (req, res) => {
     await patient.save();
 
     await queueService.recalculatePositions(department, appointmentDate);
+
+  await sseService.broadcastQueueUpdate(normalizeDepartment(department));
 
     return res.status(200).json({ message: "Successfully left the queue" });
   } catch (error) {

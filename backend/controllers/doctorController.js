@@ -1,5 +1,7 @@
 const queueService = require("../services/queueService");
 const Doctor = require("../models/Doctor");
+const { sseService } = require("../services/sseService");
+const { normalizeDepartment } = require("../utils/department");
 
 exports.moveToNext = async (req, res) => {
   try {
@@ -53,12 +55,63 @@ exports.updateStatus = async (req, res) => {
 
     await doctor.save();
 
+    sseService.broadcastDoctorStatusChange(normalizeDepartment(doctor.department), {
+      status: doctor.status,
+      breakEndTime: doctor.breakEndTime,
+      updatedAt: new Date().toISOString(),
+    });
+
     return res.status(200).json({
       message: "Status updated successfully",
       doctor,
     });
   } catch (error) {
     console.error("Update status error:", error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+exports.updateDepartment = async (req, res) => {
+  try {
+    const { department } = req.body;
+
+    if (req.user.role !== "DOCTOR") {
+      return res
+        .status(403)
+        .json({ error: "Only doctors can update department" });
+    }
+
+    const doctor = await Doctor.findOne({ userId: req.user.id });
+    if (!doctor) {
+      return res.status(404).json({ error: "Doctor profile not found" });
+    }
+
+    if (doctor.currentPatient) {
+      return res.status(400).json({
+        error: "Finish the current patient before changing department",
+      });
+    }
+
+    if (!department) {
+      return res.status(400).json({ error: "Department is required" });
+    }
+
+    doctor.department = department;
+    doctor.status = "offline";
+    await doctor.save();
+
+    sseService.broadcastDoctorStatusChange(normalizeDepartment(doctor.department), {
+      status: doctor.status,
+      breakEndTime: doctor.breakEndTime,
+      updatedAt: new Date().toISOString(),
+    });
+
+    return res.status(200).json({
+      message: "Department updated successfully",
+      doctor,
+    });
+  } catch (error) {
+    console.error("Update department error:", error);
     return res.status(500).json({ error: error.message });
   }
 };

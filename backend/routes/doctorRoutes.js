@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.patch("/next", authMiddleware, doctorController.moveToNext);
 router.patch("/status", authMiddleware, doctorController.updateStatus);
+router.patch("/department", authMiddleware, doctorController.updateDepartment);
 router.get("/current", authMiddleware, doctorController.getCurrentPatient);
 router.get("/profile", authMiddleware, doctorController.getProfile);
 

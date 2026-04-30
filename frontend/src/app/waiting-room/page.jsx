@@ -44,6 +44,18 @@ const buildErrorMessage = (data, fallback) => {
 
 const isUnauthorized = (response) => response.status === 401 || response.status === 403;
 
+const isCompletedAppointment = (record) =>
+  record?.appointmentStatus === "Completed" || record?.queueStatus === "completed";
+
+const parseEventData = (event) => {
+  if (!event?.data) return null;
+  try {
+    return JSON.parse(event.data);
+  } catch (error) {
+    return null;
+  }
+};
+
 export default function WaitingRoomPage() {
   const [user, setUser] = useState(null);
   const [patient, setPatient] = useState(null);
@@ -85,8 +97,11 @@ export default function WaitingRoomPage() {
         const storedPatientId = localStorage.getItem("latestPatientId");
         if (storedPatientId) {
           const latestPatient = await fetchPatientById(storedPatientId);
-          setPatient(latestPatient);
-          return;
+          if (!isCompletedAppointment(latestPatient)) {
+            setPatient(latestPatient);
+            return;
+          }
+          localStorage.removeItem("latestPatientId");
         }
 
         const response = await fetch(
@@ -97,7 +112,9 @@ export default function WaitingRoomPage() {
           throw new Error(buildErrorMessage(data, "Failed to fetch appointments"));
         }
 
-        const latest = data.patients?.[0] || null;
+        const latest = data.patients?.find(
+          (record) => !isCompletedAppointment(record)
+        ) || null;
         setPatient(latest);
       } catch (err) {
         console.error("Fetch patient error:", err);
@@ -161,6 +178,57 @@ export default function WaitingRoomPage() {
       setError(err.message || "Failed to fetch queue status");
     });
   }, [patient, fetchQueueInfo, router]);
+
+  useEffect(() => {
+    if (!patient?._id || !user) return undefined;
+    const token = getToken();
+    if (!token) return undefined;
+
+    const streamUrl = `${API_BASE_URL}/api/queue/stream/${patient._id}?token=${encodeURIComponent(
+      token
+    )}`;
+    const eventSource = new EventSource(streamUrl);
+
+    const handleQueueUpdate = (event) => {
+      const data = parseEventData(event);
+      if (data) {
+        setQueueInfo(data);
+      }
+    };
+
+    const handleDoctorStatus = (event) => {
+      const data = parseEventData(event);
+      if (!data) return;
+      setQueueInfo((prev) =>
+        prev
+          ? {
+              ...prev,
+              doctorStatus: data.status || prev.doctorStatus,
+              breakEndTime: data.breakEndTime ?? prev.breakEndTime,
+            }
+          : prev
+      );
+    };
+
+    const handleCompleted = () => {
+      setQueueInfo(null);
+      fetchLatestPatient(user).catch((err) => {
+        console.error("Refresh after completion error:", err);
+      });
+    };
+
+    eventSource.addEventListener("queue_update", handleQueueUpdate);
+    eventSource.addEventListener("doctor_status", handleDoctorStatus);
+    eventSource.addEventListener("appointment_completed", handleCompleted);
+
+    eventSource.onerror = (error) => {
+      console.error("SSE connection error:", error);
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [patient, user, getToken, fetchLatestPatient]);
 
   useEffect(() => {
     if (!patient?._id) return undefined;
