@@ -28,6 +28,14 @@ export default function DoctorDashboardPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  const formatConfidence = (value) => {
+    if (value === null || value === undefined || Number.isNaN(Number(value))) {
+      return "Confidence unavailable";
+    }
+    const percentage = Number(value) <= 1 ? Number(value) * 100 : Number(value);
+    return `${percentage.toFixed(1)}% match`;
+  };
+
   useEffect(() => {
     if (!user) {
       router.push("/login");
@@ -280,6 +288,66 @@ export default function DoctorDashboardPage() {
                 <p style={{ margin: "0.35rem 0", color: "#64748b" }}>
                   Symptoms: {currentPatient.symptoms}
                 </p>
+                {(currentPatient.predictedDisease ||
+                  currentPatient.predictionConfidence !== undefined ||
+                  currentPatient.extractedSymptoms ||
+                  currentPatient.topPredictions?.length) && (
+                  <div style={{
+                    marginTop: "1rem",
+                    padding: "1rem",
+                    borderRadius: "1rem",
+                    backgroundColor: "#f0fdf4",
+                    border: "1px solid #bbf7d0",
+                  }}>
+                    <p style={{
+                      margin: 0,
+                      fontWeight: 700,
+                      color: "#166534",
+                    }}>
+                      AI Insight
+                    </p>
+                    {currentPatient.predictedDisease ? (
+                      <p style={{ margin: "0.35rem 0", color: "#334155" }}>
+                        {formatConfidence(currentPatient.predictionConfidence)} for {" "}
+                        <strong>{currentPatient.predictedDisease}</strong>
+                      </p>
+                    ) : (
+                      <p style={{ margin: "0.35rem 0", color: "#334155" }}>
+                        No AI prediction available yet.
+                      </p>
+                    )}
+                    {currentPatient.topPredictions?.length > 0 && (
+                      <div style={{ marginTop: "0.5rem" }}>
+                        <p style={{ margin: 0, color: "#475569", fontWeight: 600 }}>
+                          Top matches
+                        </p>
+                        <ul style={{
+                          margin: "0.35rem 0 0",
+                          paddingLeft: "1.2rem",
+                          color: "#475569",
+                        }}>
+                          {currentPatient.topPredictions.map((prediction, index) => (
+                            <li key={`${prediction.disease}-${index}`}>
+                              {prediction.disease}
+                              {prediction.confidence ? ` (${prediction.confidence})` : ""}
+                              {prediction.specialist
+                                ? ` · ${prediction.specialist}`
+                                : ""}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {currentPatient.extractedSymptoms && (
+                      <p style={{ margin: 0, color: "#475569" }}>
+                        Extracted symptoms:{" "}
+                        {Array.isArray(currentPatient.extractedSymptoms)
+                          ? currentPatient.extractedSymptoms.join(", ")
+                          : currentPatient.extractedSymptoms}
+                      </p>
+                    )}
+                  </div>
+                )}
                 <button
                   onClick={handleNextPatient}
                   disabled={actionLoading}

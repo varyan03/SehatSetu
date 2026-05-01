@@ -49,6 +49,16 @@ const PatientSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    topPredictions: {
+      type: [
+        {
+          disease: { type: String },
+          confidence: { type: String },
+          specialist: { type: String },
+        },
+      ],
+      default: [],
+    },
     // Appointment tracking fields (optional)
     appointmentStatus: {
       type: String,

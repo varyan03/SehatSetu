@@ -3,6 +3,44 @@ const express = require("express");
 
 const router = express.Router();
 
+const buildFallbackPrediction = (body = {}) => {
+  const symptomText = body.text || "";
+  const extractedSymptoms = Array.isArray(body.symptoms)
+    ? body.symptoms
+    : symptomText
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+  const predictions = [
+    {
+      disease: "General Consultation",
+      specialist: "General Physician",
+      confidence: "0%",
+    },
+    {
+      disease: "Primary Care Review",
+      specialist: "General Physician",
+      confidence: "0%",
+    },
+    {
+      disease: "Initial Screening",
+      specialist: "General Physician",
+      confidence: "0%",
+    },
+  ];
+
+  return {
+    disease: predictions[0].disease,
+    specialist: predictions[0].specialist,
+    confidence: predictions[0].confidence,
+    predictions,
+    extracted_symptoms: extractedSymptoms,
+    matched_symptoms: [],
+    fallback: true,
+  };
+};
+
 // POST /api/predict
 router.post("/", async (req, res) => {
   try {
@@ -20,17 +58,16 @@ router.post("/", async (req, res) => {
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      return res.status(response.status).json({
-        error: errorData.detail || "Python service error",
-      });
+      const errorData = await response.json().catch(() => ({}));
+      console.warn("Python service error, using fallback:", errorData.detail);
+      return res.json(buildFallbackPrediction(body));
     }
 
     const data = await response.json();
     return res.json(data);
   } catch (error) {
     console.error("Error connecting to Python service:", error);
-    return res.status(500).json({ error: "Failed to connect to prediction service" });
+    return res.json(buildFallbackPrediction(req.body));
   }
 });
 

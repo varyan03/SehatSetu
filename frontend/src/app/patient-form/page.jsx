@@ -106,7 +106,8 @@ export default function PatientFormPage() {
           userId: user?.id,
           predictedDisease: predictionResult?.disease || null,
           predictionConfidence: predictionResult?.confidence || null,
-          extractedSymptoms: predictionResult?.extracted_symptoms || []
+          extractedSymptoms: predictionResult?.extracted_symptoms || [],
+          topPredictions: predictionResult?.predictions || [],
         }),
       });
 

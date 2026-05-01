@@ -1,8 +1,9 @@
 # Dependencies
-node_modules/
-npm-debug.log
-yarn-error.log
-package-lock.json
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
 # Next.js
 .next/
@@ -11,7 +12,11 @@ build/
 .swc/
 
 # Environment Variables and Keys
-.env*
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 *.pem
 *.key
 *.cert
@@ -25,27 +30,24 @@ __pycache__/
 *.so
 .Python
 env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-.venv/
 venv/
+.venv/
 ENV/
 env.bak/
 venv.bak/
-.env/
+**/bin/
+**/lib/
+**/include/
+*.pkl
+*.joblib
+*.h5
+*.onnx
+.ipynb_checkpoints/
+
+# Media & Assets
+*.zip
+*.tar.gz
+
 
 # Mac OS
 .DS_Store
@@ -69,12 +71,19 @@ Icon
 *.njsproj
 *.sln
 *.sw?
+.classpath
+.project
+.settings/
+*.launch
+*.sublime-workspace
 
 # Logging
 logs/
 *.log
 
-# Internal Documentation & Implementation Plans
+# Project Specific & Internal Docs
+scratch/
+.gemini/
 ARCHITECTURE_ANALYSIS.md
 IMPLEMENTATION-2.md
 PROJECT_DOCUMENTATION.md

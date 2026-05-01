@@ -18,6 +18,7 @@ router.post("/", async (req, res) => {
       predictedDisease,
       predictionConfidence,
       extractedSymptoms,
+      topPredictions,
     } = req.body;
 
     // Validation
@@ -38,6 +39,7 @@ router.post("/", async (req, res) => {
       predictedDisease,
       predictionConfidence,
       extractedSymptoms,
+      topPredictions,
     });
 
     return res.status(201).json({
