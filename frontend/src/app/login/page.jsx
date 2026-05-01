@@ -74,10 +74,10 @@ export default function LoginPage() {
         Login
       </div> */}
 
-      <div className="card" style={{ 
-        maxWidth: "480px", 
-        width: "100%", 
-        position: "relative", 
+      <div className="card" style={{
+        maxWidth: "480px",
+        width: "100%",
+        position: "relative",
         zIndex: 1,
         backgroundColor: "rgba(255, 255, 255, 0.85)",
         backdropFilter: "blur(20px)",
@@ -103,15 +103,15 @@ export default function LoginPage() {
 
         {/* Error Alert */}
         {error && (
-          <div style={{ 
-            backgroundColor: "#fef2f2", 
-            border: "1px solid #fee2e2", 
-            color: "#b91c1c", 
-            padding: "1rem", 
-            borderRadius: "1rem", 
-            marginBottom: "1.5rem", 
-            display: "flex", 
-            alignItems: "center", 
+          <div style={{
+            backgroundColor: "#fef2f2",
+            border: "1px solid #fee2e2",
+            color: "#b91c1c",
+            padding: "1rem",
+            borderRadius: "1rem",
+            marginBottom: "1.5rem",
+            display: "flex",
+            alignItems: "center",
             gap: "0.75rem",
             fontSize: "0.9rem"
           }}>
@@ -131,7 +131,7 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="you@example.com"
-              style={{ 
+              style={{
                 width: "100%",
                 padding: "1rem 1.25rem",
                 borderRadius: "1rem",
@@ -155,7 +155,7 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="••••••••"
-              style={{ 
+              style={{
                 width: "100%",
                 padding: "1rem 1.25rem",
                 borderRadius: "1rem",
@@ -173,13 +173,13 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            style={{ 
-              width: "100%", 
-              backgroundColor: "#163321", 
-              color: "white", 
-              padding: "1rem", 
-              borderRadius: "1rem", 
-              fontSize: "1rem", 
+            style={{
+              width: "100%",
+              backgroundColor: "#163321",
+              color: "white",
+              padding: "1rem",
+              borderRadius: "1rem",
+              fontSize: "1rem",
               fontWeight: "600",
               cursor: loading ? "not-allowed" : "pointer",
               transition: "all 0.2s",
