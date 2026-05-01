@@ -75,7 +75,8 @@ export default function PatientFormPage() {
       // 1. Get Prediction
       let predictionResult = null;
       try {
-        const predictResponse = await fetch("http://localhost:5001/api/predict", {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
+        const predictResponse = await fetch(`${API_URL}/api/predict`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: formData.symptoms }),
@@ -93,7 +94,8 @@ export default function PatientFormPage() {
       }
 
       // 2. Submit Patient Data
-      const response = await fetch("http://localhost:5001/api/patient", {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
+      const response = await fetch(`${API_URL}/api/patient`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

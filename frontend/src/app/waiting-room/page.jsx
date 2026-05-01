@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const API_BASE_URL = "http://localhost:5001";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
 const POLL_INTERVAL_MS = 12000;
 
 const parseJsonSafely = async (response) => {
@@ -180,7 +180,7 @@ export default function WaitingRoomPage() {
   }, [patient, fetchQueueInfo, router]);
 
   useEffect(() => {
-    if (!patient?._id || !user) return undefined;
+    if (!patient?._id || !user || !queueInfo) return undefined;
     const token = getToken();
     if (!token) return undefined;
 
@@ -228,7 +228,7 @@ export default function WaitingRoomPage() {
     return () => {
       eventSource.close();
     };
-  }, [patient, user, getToken, fetchLatestPatient]);
+  }, [patient, user, queueInfo, getToken, fetchLatestPatient]);
 
   useEffect(() => {
     if (!patient?._id) return undefined;
